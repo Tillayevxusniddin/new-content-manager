@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 224 44% 7%;
+    --foreground: 210 40% 96%;
+    --card: 223 42% 10%;
+    --card-foreground: 210 40% 96%;
+    --popover: 223 42% 10%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 224 44% 7%;
+    --secondary: 224 28% 16%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 224 28% 14%;
+    --muted-foreground: 215 16% 60%;
+    --accent: 259 80% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 224 25% 18%;
+    --input: 224 25% 18%;
+    --ring: 217 91% 60%;
+    --radius: 0.9rem;
+    --glass: 223 42% 11%;
+    --glass-border: 223 25% 20%;
+    --surface: 223 42% 9%;
+    --surface-hover: 223 38% 13%;
+    --success: 142 76% 40%;
+    --warning: 38 92% 50%;
+    --info: 199 89% 48%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, hsl(217 91% 60% / 0.13), transparent 35%),
+      radial-gradient(circle at top right, hsl(259 80% 60% / 0.12), transparent 30%),
+      radial-gradient(circle at bottom center, hsl(142 76% 36% / 0.07), transparent 35%),
+      hsl(var(--background));
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-glass-border/70 bg-card/70 backdrop-blur-xl;
+  }
+
+  .glass-soft {
+    @apply border border-glass-border/40 bg-card/50 backdrop-blur-lg;
+  }
+
+  .surface {
+    @apply bg-surface;
+  }
+
+  .surface-hover {
+    @apply bg-surface-hover;
+  }
+
+  .mesh-gradient {
+    background:
+      radial-gradient(circle at 15% 20%, hsl(217 91% 60% / 0.08), transparent 32%),
+      radial-gradient(circle at 85% 0%, hsl(259 80% 60% / 0.08), transparent 26%),
+      radial-gradient(circle at 50% 100%, hsl(142 76% 36% / 0.08), transparent 28%),
+      hsl(var(--background));
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-[#8b5cf6] to-cyan-400;
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.35), 0 0 50px hsl(var(--primary) / 0.15);
+  }
+
+  .glow-soft {
+    box-shadow: 0 0 30px hsl(var(--primary) / 0.15);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
