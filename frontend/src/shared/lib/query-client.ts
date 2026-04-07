@@ -1,0 +1,21 @@
+import { QueryClient } from '@tanstack/react-query'
+
+export const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			// With SSR, we usually want to set some default staleTime
+			// above 0 to avoid refetching immediately on the client
+			staleTime: 60 * 1000, // 1 minute
+				}
+	},
+	// queryCache: new QueryCache({
+	// 	onError: async error => {
+	// 		if (error instanceof HTTPError) {
+	// 			const body = await error.response.json().catch(() => null)
+	// 			if (body.message) {
+	// 				return toast.error(body.message)
+	// 			}
+	// 		}
+	// 	}
+	// })
+})
