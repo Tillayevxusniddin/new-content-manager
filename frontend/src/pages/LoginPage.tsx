@@ -1,28 +1,31 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BookOpenText, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/auth-context";
+import { demoAccounts } from "@/lib/mock-data";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, ssoLogin } = useAuth();
-  const [email, setEmail] = useState("admin@company.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail] = useState(demoAccounts[0]?.email ?? "");
+  const [password, setPassword] = useState(demoAccounts[0]?.password ?? "");
   const [message, setMessage] = useState<string | null>(null);
+  const from = (location.state as { from?: string } | null)?.from ?? "/";
 
   const submit = async () => {
     const result = await login(email, password);
     setMessage(result.message);
-    if (result.ok) navigate("/");
+    if (result.ok) navigate(from, { replace: true });
   };
 
   const submitSso = async () => {
     const result = await ssoLogin("dummy-sso-token");
     setMessage(result.message);
-    if (result.ok) navigate("/");
+    if (result.ok) navigate(from, { replace: true });
   };
 
   return (
@@ -63,6 +66,30 @@ export function LoginPage() {
           </div>
 
           <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>ダミーアカウント</Label>
+              <div className="grid gap-2">
+                {demoAccounts.map((account) => (
+                  <button
+                    key={account.email}
+                    type="button"
+                    onClick={() => {
+                      setEmail(account.email);
+                      setPassword(account.password);
+                      setMessage(`${account.role} アカウントを入力しました`);
+                    }}
+                    className="rounded-2xl border border-glass-border bg-white/5 px-3 py-2 text-left transition-colors hover:bg-white/10"
+                  >
+                    <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+                      <span>{account.label}</span>
+                      <span className="rounded-lg bg-primary/20 px-2 py-0.5 text-primary">{account.role}</span>
+                    </div>
+                    <div className="mt-1 text-xs text-foreground">{account.email}</div>
+                    <div className="text-xs text-muted-foreground">password: {account.password}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="space-y-2">
               <Label>メールアドレス</Label>
               <Input value={email} onChange={(e) => setEmail(e.target.value)} />

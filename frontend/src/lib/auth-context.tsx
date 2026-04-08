@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { adminUser, currentUser } from "@/lib/mock-data";
 import type { Role, User } from "@/lib/types";
+import { loginApi, ssoLoginApi } from "@/lib/api/auth";
 
 interface AuthContextValue {
   user: User | null;
@@ -47,21 +48,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     token,
     isAuthenticated: Boolean(user && token),
     async login(email: string, password: string) {
-      if (!email || !password) {
-        return { ok: false, message: "メールアドレスとパスワードを入力してください" };
+      const response = await loginApi(email, password);
+      if (!response.data.user || !response.data.token) {
+        return { ok: false, message: response.message };
       }
 
-      const isAdmin = email.toLowerCase().includes("admin");
-      persist(isAdmin ? adminUser : currentUser, `token-${Date.now()}`);
-      return { ok: true, message: "ログインしました" };
+      persist(response.data.user, response.data.token);
+      return { ok: true, message: response.message };
     },
     async ssoLogin(ssoToken: string) {
-      if (!ssoToken) {
-        return { ok: false, message: "SSO トークンが必要です" };
+      const response = await ssoLoginApi(ssoToken);
+      if (!response.data.user || !response.data.token) {
+        return { ok: false, message: response.message };
       }
 
-      persist(currentUser, `sso-${Date.now()}`);
-      return { ok: true, message: "SSO ログインしました" };
+      persist(response.data.user, response.data.token);
+      return { ok: true, message: response.message };
     },
     logout() {
       persist(null, null);

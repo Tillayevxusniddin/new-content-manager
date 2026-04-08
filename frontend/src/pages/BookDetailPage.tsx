@@ -6,10 +6,16 @@ import { Progress } from "@/components/ui/progress";
 import { books } from "@/lib/mock-data";
 import { BookCard } from "@/components/book/BookCard";
 import { MediaTabs } from "@/components/media/MediaTabs";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export function BookDetailPage() {
   const { id } = useParams();
-  const book = books.find((entry) => entry.id === id) ?? books[0];
+  const book = books.find((entry) => entry.id === id);
+
+  if (!book) {
+    return <NotFoundPage />;
+  }
+
   const related = books.filter((entry) => entry.id !== book.id).slice(0, 3);
 
   return (

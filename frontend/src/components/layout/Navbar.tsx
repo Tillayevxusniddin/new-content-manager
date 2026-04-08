@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { BookOpenText, LogIn, Search, Sparkles } from "lucide-react";
+import { BookOpenText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 
@@ -26,7 +26,12 @@ export function Navbar() {
           {user ? (
             <Button size="sm" variant="outline" onClick={logout}>ログアウト</Button>
           ) : (
-            <Button size="sm">サインイン</Button>
+            <Link
+              to="/login"
+              className="inline-flex h-8 items-center justify-center rounded-xl bg-primary px-3 text-sm font-medium text-primary-foreground transition-all hover:opacity-90 glow-primary"
+            >
+              サインイン
+            </Link>
           )}
         </div>
       </div>

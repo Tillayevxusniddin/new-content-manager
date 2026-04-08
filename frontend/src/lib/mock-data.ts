@@ -1,5 +1,13 @@
 import type { BookSummary, Category, DashboardStat, User } from "@/lib/types";
 
+export interface DemoAccount {
+  label: string;
+  role: "ADMIN" | "USER";
+  email: string;
+  password: string;
+  user: User;
+}
+
 export const categories: Category[] = [
   { id: "cat-1", name: "リーダーシップ", icon: "Users", count: 21, accent: "from-cyan-500/20 to-cyan-400/5 text-cyan-300" },
   { id: "cat-2", name: "自己啓発", icon: "Sparkles", count: 18, accent: "from-emerald-500/20 to-emerald-400/5 text-emerald-300" },
@@ -135,6 +143,23 @@ export const adminUser: User = {
   email: "admin@company.com",
   role: "ADMIN",
 };
+
+export const demoAccounts: DemoAccount[] = [
+  {
+    label: "Admin Demo",
+    role: "ADMIN",
+    email: "admin@company.com",
+    password: "Admin123!",
+    user: adminUser,
+  },
+  {
+    label: "User Demo",
+    role: "USER",
+    email: "mina.sato@company.com",
+    password: "User123!",
+    user: currentUser,
+  },
+];
 
 export const dashboardStats: DashboardStat[] = [
   { label: "書籍数", value: "128", change: "+12", color: "text-blue-300 bg-blue-500/10", icon: "BookMarked" },
