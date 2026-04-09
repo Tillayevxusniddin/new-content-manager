@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function CategoryFormDialog({ open, onClose, name }: { open: boolean; onClose: () => void; name?: string }) {
   const [value, setValue] = useState(name ?? "");
 
-  if (!open) return null;
+  useEffect(() => {
+    if (!open) return;
+    setValue(name ?? "");
+  }, [open, name]);
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-[2rem] border border-glass-border bg-card/95 p-6 shadow-2xl">
+    <Dialog open={open} onClose={onClose} className="max-w-lg">
+      <div>
         <div className="mb-5 flex items-center justify-between">
           <h3 className="text-lg font-bold text-foreground">カテゴリを追加</h3>
           <Button variant="ghost" size="icon" onClick={onClose}><X className="h-4 w-4" /></Button>
@@ -25,6 +29,6 @@ export function CategoryFormDialog({ open, onClose, name }: { open: boolean; onC
           <Button onClick={onClose}>保存</Button>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 }

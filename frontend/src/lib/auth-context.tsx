@@ -1,85 +1,161 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { adminUser, currentUser } from "@/lib/mock-data";
-import type { Role, User } from "@/lib/types";
-import { loginApi, ssoLoginApi } from "@/lib/api/auth";
+/* eslint-disable react-refresh/only-export-components */
+// filepath: /home/xusniddin/Development/new-content-manager/frontend/src/lib/auth-context.tsx
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-interface AuthContextValue {
-  user: User | null;
-  token: string | null;
+export type Role = "admin" | "user";
+
+export type SessionUser = {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+};
+
+type LoginResult = { ok: true } | { ok: false; error: string };
+
+type AuthContextValue = {
+  user: SessionUser | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<{ ok: boolean; message: string }>;
-  ssoLogin: (ssoToken: string) => Promise<{ ok: boolean; message: string }>;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<LoginResult>;
   logout: () => void;
-  switchRole: (role: Role) => void;
+  hasRole: (roles: Role | Role[]) => boolean;
+};
+
+export const DEMO_ACCOUNTS = [
+  { role: "admin" as const, email: "admin@example.com", password: "admin123", label: "管理者アカウント" },
+  { role: "user" as const, email: "user@example.com", password: "user123", label: "一般ユーザー" },
+] as const;
+
+const SESSION_KEY = "ncm.session.v1";
+const LEGACY_KEYS = [
+  "role",
+  "userRole",
+  "uiMode",
+  "viewMode",
+  "isAdminView",
+  "adminView",
+  "auth",
+  "session",
+  "token",
+];
+
+const FRONTEND_USERS: Array<SessionUser & { password: string; aliases?: string[] }> = [
+  {
+    id: "u-admin-1",
+    name: "Admin",
+    email: DEMO_ACCOUNTS[0].email,
+    password: DEMO_ACCOUNTS[0].password,
+    role: "admin",
+    aliases: ["admin", "admin@local"],
+  },
+  {
+    id: "u-user-1",
+    name: "User",
+    email: DEMO_ACCOUNTS[1].email,
+    password: DEMO_ACCOUNTS[1].password,
+    role: "user",
+    aliases: ["user", "user@local"],
+  },
+];
+
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+function clearLegacyStorage() {
+  LEGACY_KEYS.forEach((k) => {
+    localStorage.removeItem(k);
+    sessionStorage.removeItem(k);
+  });
 }
 
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+function saveSession(user: SessionUser | null) {
+  if (!user) {
+    localStorage.removeItem(SESSION_KEY);
+    return;
+  }
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ user }));
+}
 
-const STORAGE_KEY = "new-content-manager-auth";
+function readSession(): SessionUser | null {
+  const raw = localStorage.getItem(SESSION_KEY);
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as { user?: SessionUser };
+    if (!parsed?.user?.role) return null;
+    return parsed.user;
+  } catch {
+    return null;
+  }
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<SessionUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    try {
-      const parsed = JSON.parse(raw) as { user: User; token: string };
-      setUser(parsed.user);
-      setToken(parsed.token);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
+    clearLegacyStorage();
+    const restored = readSession();
+    setUser(restored);
+    setIsLoading(false);
   }, []);
 
-  const persist = (nextUser: User | null, nextToken: string | null) => {
-    setUser(nextUser);
-    setToken(nextToken);
-    if (nextUser && nextToken) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: nextUser, token: nextToken }));
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  };
+  const login = useCallback(async (email: string, password: string): Promise<LoginResult> => {
+    const normalized = email.trim().toLowerCase();
 
-  const value = useMemo<AuthContextValue>(() => ({
-    user,
-    token,
-    isAuthenticated: Boolean(user && token),
-    async login(email: string, password: string) {
-      const response = await loginApi(email, password);
-      if (!response.data.user || !response.data.token) {
-        return { ok: false, message: response.message };
-      }
+    const found = FRONTEND_USERS.find((u) => {
+      const emails = [u.email.toLowerCase(), ...(u.aliases ?? []).map((a) => a.toLowerCase())];
+      return emails.includes(normalized) && u.password === password;
+    });
 
-      persist(response.data.user, response.data.token);
-      return { ok: true, message: response.message };
-    },
-    async ssoLogin(ssoToken: string) {
-      const response = await ssoLoginApi(ssoToken);
-      if (!response.data.user || !response.data.token) {
-        return { ok: false, message: response.message };
-      }
+    if (!found) return { ok: false, error: "Invalid credentials" };
 
-      persist(response.data.user, response.data.token);
-      return { ok: true, message: response.message };
+    const sessionUser: SessionUser = {
+      id: found.id,
+      name: found.name,
+      email: found.email,
+      role: found.role,
+    };
+
+    clearLegacyStorage();
+    setUser(sessionUser);
+    saveSession(sessionUser);
+
+    return { ok: true };
+  }, []);
+
+  const logout = useCallback(() => {
+    setUser(null);
+    saveSession(null);
+    clearLegacyStorage();
+    sessionStorage.clear();
+  }, []);
+
+  const hasRole = useCallback(
+    (roles: Role | Role[]) => {
+      if (!user) return false;
+      const arr = Array.isArray(roles) ? roles : [roles];
+      return arr.includes(user.role);
     },
-    logout() {
-      persist(null, null);
-    },
-    switchRole(role: Role) {
-      persist(role === "ADMIN" ? adminUser : currentUser, `token-${Date.now()}`);
-    },
-  }), [token, user]);
+    [user]
+  );
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      user,
+      isAuthenticated: !!user,
+      isLoading,
+      login,
+      logout,
+      hasRole,
+    }),
+    [user, isLoading, login, logout, hasRole]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  return context;
+export function useAuthContext() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuthContext must be used inside AuthProvider");
+  return ctx;
 }

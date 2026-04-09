@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
@@ -22,11 +23,17 @@ export function BookFormDialog({ book, open, onClose }: Props) {
 
   const heading = useMemo(() => (book ? "書籍要約を編集" : "新しい書籍要約を追加"), [book]);
 
-  if (!open) return null;
+  useEffect(() => {
+    if (!open) return;
+    setTitle(book?.title ?? "");
+    setAuthor(book?.author ?? "");
+    setCategoryId(book?.categoryId ?? categories[0]?.id ?? "");
+    setDescription(book?.description ?? "");
+  }, [open, book]);
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-3xl rounded-[2rem] border border-glass-border bg-card/95 p-5 shadow-2xl md:p-6">
+    <Dialog open={open} onClose={onClose} className="max-w-2xl">
+      <div>
         <div className="mb-5 flex items-center justify-between">
           <h3 className="text-lg font-bold text-foreground">{heading}</h3>
           <Button variant="ghost" size="icon" onClick={onClose}><X className="h-4 w-4" /></Button>
@@ -76,6 +83,6 @@ export function BookFormDialog({ book, open, onClose }: Props) {
           <Button onClick={onClose}>保存</Button>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 }

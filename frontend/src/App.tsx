@@ -2,9 +2,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "@/lib/auth-context";
 import { AppShell } from "@/components/layout/AppLayout";
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { RouteGuard } from "@/components/layout/RouteGuard";
+import RouteGuard from "@/components/layout/RouteGuard";
 import { HomePage } from "@/pages/HomePage";
-import { LoginPage } from "@/pages/LoginPage";
+import LoginPage from "@/pages/LoginPage";
 import { BooksPage } from "@/pages/BooksPage";
 import { BookDetailPage } from "@/pages/BookDetailPage";
 import { AdminDashboardPage } from "@/pages/AdminDashboardPage";
@@ -33,7 +33,7 @@ export default function App() {
           </Route>
           <Route
             element={
-              <RouteGuard allowRoles={["ADMIN"]}>
+              <RouteGuard allow={["admin"]}>
                 <AdminLayout />
               </RouteGuard>
             }

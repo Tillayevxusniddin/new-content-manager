@@ -14,7 +14,7 @@ export function VideoPlayer({ book }: { book: BookSummary }) {
     <div className="space-y-6">
       <div className="overflow-hidden rounded-[2rem] border border-glass-border bg-surface/90">
         <div className="relative aspect-video bg-gradient-to-br from-black via-slate-900 to-slate-800">
-          <button className="absolute inset-0 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-2xl">
+          <button className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-[65%] items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-2xl sm:h-20 sm:w-20 sm:-translate-y-1/2">
             <Play className="ml-1 h-8 w-8" />
           </button>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-4">

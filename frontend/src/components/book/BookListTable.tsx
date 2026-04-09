@@ -11,14 +11,14 @@ export function BookListTable({ books, onDelete }: { books: BookSummary[]; onDel
     <div className="overflow-hidden rounded-3xl border border-glass-border bg-card/70 backdrop-blur-xl">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-white/5 text-left text-sm">
-          <thead className="bg-white/5 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+          <thead className="bg-white/5 text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
             <tr>
-              <th className="px-4 py-4">書籍</th>
-              <th className="px-4 py-4">カテゴリ</th>
-              <th className="px-4 py-4">メディア</th>
-              <th className="px-4 py-4">進捗</th>
-              <th className="px-4 py-4">更新日</th>
-              <th className="px-4 py-4 text-right">操作</th>
+              <th className="whitespace-nowrap px-4 py-4">書籍</th>
+              <th className="whitespace-nowrap px-4 py-4">カテゴリ</th>
+              <th className="whitespace-nowrap px-4 py-4">メディア</th>
+              <th className="whitespace-nowrap px-4 py-4">進捗</th>
+              <th className="whitespace-nowrap px-4 py-4">更新日</th>
+              <th className="whitespace-nowrap px-4 py-4 text-right">操作</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">

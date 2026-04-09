@@ -13,11 +13,11 @@ export function MediaTabs({ book }: { book: BookSummary }) {
     <button
       onClick={() => setTab(key)}
       className={cn(
-        "flex-1 rounded-2xl px-4 py-3 text-sm font-medium transition-all",
+        "min-w-0 flex-1 rounded-2xl px-2 py-2.5 text-xs font-medium transition-all sm:px-4 sm:py-3 sm:text-sm",
         tab === key ? "bg-primary text-primary-foreground glow-soft" : "text-muted-foreground hover:bg-surface-hover hover:text-foreground",
       )}
     >
-      <span className="inline-flex items-center gap-2">{icon}{label}</span>
+      <span className="inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap sm:gap-2">{icon}{label}</span>
     </button>
   );
 

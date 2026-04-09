@@ -40,6 +40,8 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -51,10 +53,21 @@
       radial-gradient(circle at top right, hsl(259 80% 60% / 0.12), transparent 30%),
       radial-gradient(circle at bottom center, hsl(142 76% 36% / 0.07), transparent 35%),
       hsl(var(--background));
+    overflow-x: hidden;
   }
 
   #root {
     min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  select,
+  option {
+    color: hsl(var(--foreground));
+  }
+
+  option {
+    background: hsl(var(--card));
   }
 }
 

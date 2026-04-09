@@ -1,24 +1,31 @@
-import type { ReactNode } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/lib/auth-context";
-import type { Role } from "@/lib/types";
+// filepath: /home/xusniddin/Development/new-content-manager/frontend/src/components/layout/RouteGuard.tsx
+import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../../lib/hooks/useAuth";
+import type { Role } from "../../lib/auth-context";
 
-interface RouteGuardProps {
-  children: ReactNode;
-  allowRoles?: Role[];
+type Props = {
+  allow?: Role[];
+  children?: React.ReactNode;
+};
+
+function getDefaultPath(role: Role) {
+  return role === "admin" ? "/admin" : "/";
 }
 
-export function RouteGuard({ children, allowRoles }: RouteGuardProps) {
+export default function RouteGuard({ allow, children }: Props) {
+  const { user, isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
-  const { isAuthenticated, user } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (isLoading) return null;
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  if (allowRoles && user && !allowRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+  if (allow && !allow.includes(user.role)) {
+    return <Navigate to={getDefaultPath(user.role)} replace />;
   }
 
-  return children;
+  return children ? <>{children}</> : <Outlet />;
 }
