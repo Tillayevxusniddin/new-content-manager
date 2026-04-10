@@ -23,8 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-usefull_codes
-usefull__ui_images
 docs
 rules.md
 package-lock.json
