@@ -1,6 +1,7 @@
 import { BookOpenText, Gauge, Layers, LayoutGrid, Settings } from 'lucide-react'
-import Link from 'next/link'
 import type { ComponentType } from 'react'
+
+import { NavLink } from '@/entities/navlink'
 
 type Item = {
 	to: string
@@ -37,12 +38,12 @@ export default function AppNavigation() {
 				</p>
 			</div>
 			{items.map(item => (
-				<Link key={item.to} href={item.to}>
+				<NavLink key={item.to} href={item.to}>
 					<span className='flex items-center gap-2.5'>
 						<item.icon className='h-4 w-4' />
 						<span>{item.label}</span>
 					</span>
-				</Link>
+				</NavLink>
 			))}
 		</nav>
 	)

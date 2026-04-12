@@ -1,11 +1,7 @@
 import AppNavigation from '@/widgets/app-navigation'
 import { Navbar } from '@/widgets/navigation'
 
-export default function Root({
-	children
-}: Readonly<{
-	children: React.ReactNode
-}>) {
+export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
 		<div className='bg-background text-foreground min-h-screen overflow-x-hidden'>
 			<Navbar />

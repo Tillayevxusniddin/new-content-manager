@@ -1,35 +1,34 @@
-import { Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Inter } from 'next/font/google'
 
-import { cn } from "@/shared/lib/utils"
-import { Providers } from "@/shared/providers"
-import "./globals.css"
+import { AuthProvider } from '@/shared/hooks/auth-context'
+import { cn } from '@/shared/lib/utils'
+import { Providers } from '@/shared/providers'
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+	subsets: ['latin'],
+	variable: '--font-mono'
 })
 
 export default function RootLayout({
-  children,
+	children
 }: Readonly<{
-  children: React.ReactNode
+	children: React.ReactNode
 }>) {
-  return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn(
-        "antialiased",
-        fontMono.variable,
-        "font-sans",
-        inter.variable
-      )}
-    >
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
+	return (
+		<html
+			lang='en'
+			suppressHydrationWarning
+			className={cn('antialiased', fontMono.variable, 'font-sans', inter.variable)}
+		>
+			<body>
+				<AuthProvider>
+					<Providers>{children}</Providers>
+				</AuthProvider>
+			</body>
+		</html>
+	)
 }

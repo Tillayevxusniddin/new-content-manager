@@ -1,6 +1,10 @@
 import { BookOpenText } from 'lucide-react'
 import Link from 'next/link'
 
+import { ThemeToggle } from '@/widgets/theme-toggle'
+
+import { NavLink } from '@/entities/navlink'
+
 import { Button } from '@/shared/ui'
 
 export function Navbar() {
@@ -27,39 +31,39 @@ export function Navbar() {
 						<>
 							{isAdmin ? (
 								<>
-									<Link
+									<NavLink
 										href='/admin'
 										className='text-muted-foreground hover:text-foreground text-sm'
 									>
 										ダッシュボード
-									</Link>
-									<Link
+									</NavLink>
+									<NavLink
 										href='/admin/books'
 										className='text-muted-foreground hover:text-foreground text-sm'
 									>
 										書籍管理
-									</Link>
-									<Link
+									</NavLink>
+									<NavLink
 										href='/admin/categories'
 										className='text-muted-foreground hover:text-foreground text-sm'
 									>
 										カテゴリ管理
-									</Link>
+									</NavLink>
 								</>
 							) : (
 								<>
-									<Link
+									<NavLink
 										href='/'
 										className='text-muted-foreground hover:text-foreground text-sm'
 									>
 										ホーム
-									</Link>
-									<Link
+									</NavLink>
+									<NavLink
 										href='/books'
 										className='text-muted-foreground hover:text-foreground text-sm'
 									>
 										書籍一覧
-									</Link>
+									</NavLink>
 								</>
 							)}
 							<span className='border-glass-border bg-card/60 text-muted-foreground rounded-full border px-2.5 py-1 text-xs'>
@@ -74,6 +78,7 @@ export function Navbar() {
 							ログイン
 						</Link>
 					)}
+					<ThemeToggle />
 					{user ? (
 						<Button size='sm' variant='outline'>
 							ログアウト
@@ -89,6 +94,7 @@ export function Navbar() {
 				</div>
 
 				<div className='flex items-center gap-2 md:hidden'>
+					<ThemeToggle />
 					{user ? (
 						<>
 							<span className='border-glass-border bg-card/60 text-muted-foreground rounded-full border px-2 py-1 text-[10px]'>
