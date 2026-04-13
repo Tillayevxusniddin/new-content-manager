@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 /* eslint-disable react-refresh/only-export-components */
 // filepath: /home/xusniddin/Development/new-content-manager/frontend/src/lib/auth-context.tsx
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
@@ -97,7 +98,7 @@ function readSession(): SessionUser | null {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<SessionUser | null>(null)
 	const [isLoading, setIsLoading] = useState(true)
-
+	const router = useRouter()
 	useEffect(() => {
 		clearLegacyStorage()
 		const restored = readSession()
@@ -126,6 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		setUser(sessionUser)
 		saveSession(sessionUser)
 
+		router.push(sessionUser.role === 'admin' ? '/admin' : '/')
 		return { ok: true }
 	}, [])
 

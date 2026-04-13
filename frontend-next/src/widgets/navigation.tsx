@@ -27,6 +27,7 @@ export function Navbar() {
 				</Link>
 
 				<div className='hidden items-center gap-3 md:flex'>
+					<ThemeToggle />
 					{user ? (
 						<>
 							{isAdmin ? (
@@ -78,7 +79,6 @@ export function Navbar() {
 							ログイン
 						</Link>
 					)}
-					<ThemeToggle />
 					{user ? (
 						<Button size='sm' variant='outline'>
 							ログアウト
@@ -94,7 +94,6 @@ export function Navbar() {
 				</div>
 
 				<div className='flex items-center gap-2 md:hidden'>
-					<ThemeToggle />
 					{user ? (
 						<>
 							<span className='border-glass-border bg-card/60 text-muted-foreground rounded-full border px-2 py-1 text-[10px]'>
