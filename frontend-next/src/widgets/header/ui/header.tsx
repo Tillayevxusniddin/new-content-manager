@@ -1,15 +1,19 @@
+'use client'
 import { BookOpenText } from 'lucide-react'
 import Link from 'next/link'
 
-import { ThemeToggle } from '@/widgets/theme-toggle'
+import { ThemeToggle } from '@/features/theme-toggle/ui/toggle'
 
 import { NavLink } from '@/entities/navlink'
 
 import { Button } from '@/shared/ui'
 
-export function Navbar() {
-	const isAdmin = true
-	const user = false
+import { useHeaderModel } from '../model'
+
+export const Header = () => {
+	const model = useHeaderModel()
+	const { user, logout } = model
+	const isAdmin = user?.role === 'admin'
 
 	return (
 		<header className='border-glass-border bg-background/65 sticky top-0 z-40 border-b backdrop-blur-xl'>
@@ -80,7 +84,7 @@ export function Navbar() {
 						</Link>
 					)}
 					{user ? (
-						<Button size='sm' variant='outline'>
+						<Button size='sm' variant='outline' onClick={logout}>
 							ログアウト
 						</Button>
 					) : (
@@ -89,26 +93,6 @@ export function Navbar() {
 							className='bg-primary text-primary-foreground glow-primary inline-flex h-8 items-center justify-center rounded-xl px-3 text-sm font-medium transition-all hover:opacity-90'
 						>
 							サインイン
-						</Link>
-					)}
-				</div>
-
-				<div className='flex items-center gap-2 md:hidden'>
-					{user ? (
-						<>
-							<span className='border-glass-border bg-card/60 text-muted-foreground rounded-full border px-2 py-1 text-[10px]'>
-								{isAdmin ? 'ADMIN' : 'USER'}
-							</span>
-							<Button size='sm' variant='outline'>
-								ログアウト
-							</Button>
-						</>
-					) : (
-						<Link
-							href='/login'
-							className='bg-primary text-primary-foreground inline-flex h-8 items-center justify-center rounded-xl px-3 text-sm font-medium transition-all hover:opacity-90'
-						>
-							ログイン
 						</Link>
 					)}
 				</div>

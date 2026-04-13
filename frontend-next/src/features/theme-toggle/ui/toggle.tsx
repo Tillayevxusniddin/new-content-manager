@@ -2,25 +2,11 @@
 
 import { MoonStar, SunMedium } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 
 import { Button } from '@/shared/ui'
 
 export function ThemeToggle() {
 	const { theme, setTheme, resolvedTheme } = useTheme()
-	const [mounted, setMounted] = useState(false)
-
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	if (!mounted) {
-		return (
-			<Button size='sm' variant='outline' type='button' aria-label='Theme toggle' disabled>
-				<SunMedium className='h-4 w-4' />
-			</Button>
-		)
-	}
 
 	const isDark = (resolvedTheme ?? theme) === 'dark'
 

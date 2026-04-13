@@ -136,6 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		saveSession(null)
 		clearLegacyStorage()
 		sessionStorage.clear()
+		router.push('/login')
 	}, [])
 
 	const hasRole = useCallback(
