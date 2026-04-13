@@ -16,7 +16,7 @@ export const Header = () => {
 	const isAdmin = user?.role === 'admin'
 
 	return (
-		<header className='border-glass-border bg-background/65 sticky top-0 z-40 border-b backdrop-blur-xl'>
+		<header className='border-glass-border bg-background/65 fixed top-0 right-0 left-0 z-40 border-b backdrop-blur-xl'>
 			<div className='mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6'>
 				<Link href='/' className='text-foreground flex items-center gap-3 font-bold'>
 					<span className='bg-primary/15 text-primary glow-soft flex h-10 w-10 items-center justify-center rounded-2xl'>

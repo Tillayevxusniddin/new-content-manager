@@ -37,7 +37,7 @@ export function BookFilterBar({
 				/>
 			</div>
 			<Select value={categoryId} onValueChange={event => onCategoryIdChange(event)}>
-				<SelectTrigger>
+				<SelectTrigger className='w-full'>
 					<SelectValue placeholder='カテゴリを選択...' />
 				</SelectTrigger>
 				<SelectContent>

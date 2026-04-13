@@ -13,6 +13,8 @@ import {
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
+import { DialogCreateBook } from '@/features/dialog-create-book/ui/dialog-create-book'
+
 import { BookSummary, books, categories, dashboardStats } from '@/shared/lib/mock-data'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui'
@@ -263,6 +265,7 @@ export default function Page() {
 					<p className='text-muted-foreground text-sm'>書籍要約コンテンツを管理</p>
 				</div>
 				<Button onClick={() => setDialogOpen(true)}>新規追加</Button>
+				<DialogCreateBook trigger={<Button>新規追加</Button>} />
 			</div>
 
 			<div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-4'>
@@ -310,6 +313,7 @@ export default function Page() {
 			</div>
 
 			<BookListTable books={filtered} onDelete={() => undefined} />
+
 			<BookFormDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
 		</div>
 	)
