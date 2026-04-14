@@ -150,6 +150,7 @@
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		overflow-x: hidden;
+		overflow-y: scroll;
 	}
 	html {
 		font-family:
@@ -160,7 +161,8 @@
 			sans-serif;
 		scroll-behavior: smooth;
 		overflow-x: hidden;
-		scrollbar-gutter: stable;
+		scrollbar-gutter: stable both-edges;
+		overflow-y: scroll;
 	}
 	option {
 		background: hsl(var(--card));

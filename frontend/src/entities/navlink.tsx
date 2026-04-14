@@ -9,14 +9,16 @@ interface NavLinkProps {
 	active?: boolean
 	children: React.ReactNode
 	className?: string
+	onClick?: React.MouseEventHandler<HTMLAnchorElement>
 }
 
-export function NavLink({ href, active, children, className }: NavLinkProps) {
+export function NavLink({ href, active, children, className, onClick }: NavLinkProps) {
 	const pathname = usePathname()
 	const isActive = active !== undefined ? active : pathname === href
 	return (
 		<Link
 			href={href}
+			onClick={onClick}
 			className={cn(
 				'block rounded-xl border border-transparent px-3 py-2.5 text-sm font-medium transition-all',
 				isActive

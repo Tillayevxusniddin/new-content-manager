@@ -334,46 +334,115 @@ export default function Page() {
 	}
 	const related = books.filter(entry => entry.id !== book?.id).slice(0, 3)
 	return (
-		<div className='mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-8'>
-			<div className='mb-6 flex items-center gap-4'>
-				<Link href='/books'>
-					<Button variant='outline' size='icon'>
-						<ArrowLeft className='h-4 w-4' />
-					</Button>
-				</Link>
-				<div className='flex-1'>
-					<Badge className='mb-2 border-white/10 bg-white/5 text-white/80'>
-						{book.categoryName}
-					</Badge>
-					<h1 className='text-foreground text-3xl font-black'>{book.title}</h1>
-					<p className='text-muted-foreground text-sm'>{book.author}</p>
-				</div>
-				<div
-					className={`hidden h-24 w-24 rounded-3xl bg-linear-to-br ${book.coverTone} lg:block`}
-				/>
-			</div>
-
-			<div className='grid gap-8 lg:grid-cols-[1fr_320px]'>
-				<div className='space-y-6'>
-					<MediaTabs book={book} />
-				</div>
-
-				<aside className='space-y-4'>
-					<div className='border-glass-border bg-card/70 rounded-[2rem] border p-5'>
-						<div className='text-foreground mb-3 flex items-center gap-2 text-sm font-semibold'>
-							<ListChecks className='text-primary h-4 w-4' />
-							キーポイント
+		<div className='mx-auto max-w-7xl space-y-8 px-4 py-6 md:px-6 md:py-8'>
+			<section className={`relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-linear-to-br ${book.coverTone} p-6 shadow-[0_30px_120px_rgba(0,0,0,0.35)] md:p-8`}>
+				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_22%)]' />
+				<div className='relative grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-center'>
+					<div className='mx-auto w-full max-w-56'>
+						<div className='rounded-[2rem] border border-white/10 bg-black/25 p-3 shadow-2xl backdrop-blur-xl'>
+							<div className='aspect-[3/4] rounded-[1.5rem] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.15),transparent_26%),linear-gradient(135deg,rgba(0,0,0,0.08),rgba(255,255,255,0.08))] p-6 text-white'>
+								<div className='flex h-full flex-col justify-between'>
+									<div className='flex items-center justify-between text-[10px] tracking-[0.24em] text-white/65 uppercase'>
+										<span>{book.categoryName}</span>
+										<span>{book.progress}%</span>
+									</div>
+									<div className='space-y-2'>
+										<div className='text-3xl font-black leading-none'>{book.title}</div>
+										<div className='text-sm text-white/75'>{book.author}</div>
+									</div>
+									<div className='flex items-center gap-2 text-white/80'>
+										{book.hasText && <FileText className='h-4 w-4' />}
+										{book.hasAudio && <Headphones className='h-4 w-4' />}
+										{book.hasVideo && <Video className='h-4 w-4' />}
+									</div>
+								</div>
+							</div>
 						</div>
-						<ul className='text-muted-foreground space-y-2 text-sm'>
+					</div>
+
+					<div className='space-y-5 text-white'>
+						<div className='flex items-center justify-between gap-4'>
+							<Link href='/books'>
+								<Button variant='outline' size='icon' className='border-white/15 bg-black/20 text-white hover:bg-black/35'>
+									<ArrowLeft className='h-4 w-4' />
+								</Button>
+							</Link>
+							<Badge className='border-white/10 bg-black/20 text-white/90 backdrop-blur'>
+								{book.categoryName}
+							</Badge>
+						</div>
+						<h1 className='max-w-3xl text-4xl leading-tight font-black tracking-tight md:text-6xl'>
+							{book.title}
+						</h1>
+						<p className='max-w-2xl text-sm leading-7 text-white/75 md:text-base'>
+							{book.description}
+						</p>
+						<div className='flex flex-wrap items-center gap-3 text-xs text-white/70'>
+							<span className='rounded-full border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur'>
+								{book.duration}
+							</span>
+							<span className='rounded-full border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur'>
+								{book.keyPoints.length} キーポイント
+							</span>
+							<span className='rounded-full border border-white/10 bg-black/20 px-3 py-1.5 backdrop-blur'>
+								更新日 {book.updatedAt}
+							</span>
+						</div>
+						<Progress value={book.progress} className='h-2 bg-white/15' />
+						<div className='flex flex-wrap gap-3'>
+							<Link href='#audio-player'>
+								<Button size='lg' className='min-w-44'>
+									<Play className='h-4 w-4' />
+									音声から再生
+								</Button>
+							</Link>
+							<Link href='#text-reader'>
+								<Button size='lg' variant='outline' className='border-white/15 bg-black/20 text-white hover:bg-black/35'>
+									下へスクロール
+									<ArrowLeft className='h-4 w-4 rotate-[-90deg]' />
+								</Button>
+							</Link>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<div className='grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]'>
+				<main className='space-y-6'>
+					<section id='audio-player' className='scroll-mt-28 rounded-[2rem] border border-white/10 bg-white/5 p-4 backdrop-blur-xl md:p-5'>
+						<AudioPlayer book={book} />
+					</section>
+
+					<section id='text-reader' className='scroll-mt-28 rounded-[2rem] border border-white/10 bg-white/5 p-4 backdrop-blur-xl md:p-5'>
+						<div className='mb-4 flex items-center gap-2 text-sm font-semibold text-white'>
+							<FileText className='text-primary h-4 w-4' />
+							Text summary
+						</div>
+						<TextReader book={book} />
+					</section>
+
+					<section id='video-reader' className='scroll-mt-28 rounded-[2rem] border border-white/10 bg-white/5 p-4 backdrop-blur-xl md:p-5'>
+						<div className='mb-4 flex items-center gap-2 text-sm font-semibold text-white'>
+							<Video className='text-primary h-4 w-4' />
+							Video summary
+						</div>
+						<VideoPlayer book={book} />
+					</section>
+				</main>
+
+				<aside className='space-y-6 lg:sticky lg:top-28'>
+					<div className='rounded-[2rem] border border-white/10 bg-white/5 p-5 backdrop-blur-xl'>
+						<div className='text-sm font-semibold text-white'>キーポイント</div>
+						<ul className='mt-4 space-y-3 text-sm text-white/72'>
 							{book.keyPoints.map(point => (
 								<li key={point} className='flex gap-2'>
-									<CheckCircle2 className='text-primary mt-0.5 h-4 w-4' />
-									{point}
+									<CheckCircle2 className='text-primary mt-0.5 h-4 w-4 shrink-0' />
+									<span>{point}</span>
 								</li>
 							))}
 						</ul>
-						<div className='mt-5 space-y-2'>
-							<div className='text-muted-foreground flex justify-between text-xs'>
+						<div className='mt-5'>
+							<div className='mb-2 flex items-center justify-between text-xs text-white/55'>
 								<span>進捗</span>
 								<span>{book.progress}%</span>
 							</div>
@@ -382,9 +451,7 @@ export default function Page() {
 					</div>
 
 					<div>
-						<div className='text-foreground mb-3 text-sm font-semibold'>
-							関連する要約
-						</div>
+						<div className='mb-3 text-sm font-semibold text-white'>関連する要約</div>
 						<div className='space-y-3'>
 							{related.map(entry => (
 								<BookCard key={entry.id} book={entry} />

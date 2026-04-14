@@ -238,6 +238,27 @@ export const adminUser: User = {
 	role: 'ADMIN'
 }
 
+export const user2: User = {
+	id: 'user-2',
+	name: 'Yuki Yamamoto',
+	email: 'yuki.yamamoto@company.com',
+	role: 'USER'
+}
+
+export const user3: User = {
+	id: 'user-3',
+	name: 'Hiroshi Nakamura',
+	email: 'hiroshi.nakamura@company.com',
+	role: 'USER'
+}
+
+export const user4: User = {
+	id: 'user-4',
+	name: 'Sakura Kobayashi',
+	email: 'sakura.kobayashi@company.com',
+	role: 'USER'
+}
+
 export const demoAccounts: DemoAccount[] = [
 	{
 		label: 'Admin Demo',
@@ -247,11 +268,32 @@ export const demoAccounts: DemoAccount[] = [
 		user: adminUser
 	},
 	{
-		label: 'User Demo',
+		label: 'Mina Sato (Sales)',
 		role: 'USER',
 		email: 'mina.sato@company.com',
 		password: 'User123!',
 		user: currentUser
+	},
+	{
+		label: 'Yuki Yamamoto (Tech)',
+		role: 'USER',
+		email: 'yuki.yamamoto@company.com',
+		password: 'User123!',
+		user: user2
+	},
+	{
+		label: 'Hiroshi Nakamura (Lead)',
+		role: 'USER',
+		email: 'hiroshi.nakamura@company.com',
+		password: 'User123!',
+		user: user3
+	},
+	{
+		label: 'Sakura Kobayashi (HR)',
+		role: 'USER',
+		email: 'sakura.kobayashi@company.com',
+		password: 'User123!',
+		user: user4
 	}
 ]
 
