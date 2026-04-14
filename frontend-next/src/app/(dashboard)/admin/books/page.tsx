@@ -1,12 +1,12 @@
 'use client'
 import { useMemo, useState } from 'react'
 
-import { books, categories } from '@/shared/lib/mock-data'
-import { Button } from '@/shared/ui'
-import { Input } from '@/shared/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
+import { BookTable } from '@/widgets/book-table'
 
-import { BookFormDialog, BookListTable } from '../page'
+import { DialogCreateBook } from '@/features/dialog-create-book'
+
+import { books } from '@/shared/lib/mock-data'
+import { Button } from '@/shared/ui'
 
 export default function page() {
 	const [open, setOpen] = useState(false)
@@ -30,30 +30,10 @@ export default function page() {
 					<h1 className='text-foreground text-2xl font-black'>書籍管理</h1>
 					<p className='text-muted-foreground text-sm'>作成・編集・削除を行います。</p>
 				</div>
-				<Button onClick={() => setOpen(true)}>新規追加</Button>
+				<DialogCreateBook trigger={<Button>新規追加</Button>} />
 			</div>
-			<div className='grid gap-3 md:grid-cols-[1fr_220px]'>
-				<Input
-					value={query}
-					onChange={e => setQuery(e.target.value)}
-					placeholder='書籍を検索...'
-				/>
-				<Select value={categoryId} onValueChange={e => setCategoryId(e)}>
-					<SelectTrigger>
-						<SelectValue placeholder='カテゴリを選択...' />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value='all'>すべてのカテゴリ</SelectItem>
-						{categories.map(category => (
-							<SelectItem key={category.id} value={category.id}>
-								{category.name}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-			</div>
-			<BookListTable books={filtered} onDelete={() => undefined} />
-			<BookFormDialog open={open} onClose={() => setOpen(false)} />
+
+			<BookTable />
 		</div>
 	)
 }

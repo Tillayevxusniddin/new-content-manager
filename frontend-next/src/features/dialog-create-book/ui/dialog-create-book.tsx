@@ -16,6 +16,8 @@ import {
 	Select,
 	SelectContent,
 	SelectItem,
+	SelectTrigger,
+	SelectValue,
 	Textarea
 } from '@/shared/ui'
 
@@ -27,8 +29,8 @@ export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigg
 				<DialogHeader>
 					<DialogTitle>新しい書籍要約を追加</DialogTitle>
 				</DialogHeader>
-				<ScrollArea className='h-110 rounded-md p-4'>
-					<div>
+				<ScrollArea className='h-110 rounded-md px-3'>
+					<div className='px-1'>
 						<div className='grid gap-4 md:grid-cols-2'>
 							<div className='space-y-2'>
 								<Label>タイトル</Label>
@@ -41,6 +43,9 @@ export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigg
 							<div className='space-y-2 md:col-span-2'>
 								<Label>カテゴリ</Label>
 								<Select>
+									<SelectTrigger className={'w-full'}>
+										<SelectValue placeholder='カテゴリを選択' />
+									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value='as'>カテゴリを選択</SelectItem>
 										{categories.map(category => (
@@ -61,7 +66,7 @@ export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigg
 							{['カバー画像', '音声ファイル', '動画ファイル'].map(label => (
 								<button
 									key={label}
-									className='border-glass-border text-muted-foreground hover:border-primary/40 hover:text-foreground flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-white/5 px-4 py-5 text-sm transition-colors'
+									className='border-glass-border text-muted-foreground hover:border-primary/40 hover:text-foreground flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-white/5 px-4 py-5 text-sm transition-colors'
 								>
 									<Upload className='h-5 w-5' />
 									{label}
@@ -69,10 +74,8 @@ export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigg
 							))}
 						</div>
 
-						<div className='border-glass-border mt-4 rounded-2xl border bg-white/5 p-4'>
-							<div className='text-muted-foreground mb-2 text-sm font-medium'>
-								テキスト要約
-							</div>
+						<div className='mt-5 space-y-2'>
+							<Label>テキスト要約</Label>
 							<Textarea
 								// defaultValue={book?.textContent ?? ''}
 								placeholder='Markdown 対応のテキスト要約を入力'

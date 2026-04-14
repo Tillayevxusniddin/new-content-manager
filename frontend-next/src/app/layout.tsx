@@ -13,6 +13,11 @@ const fontMono = Geist_Mono({
 	variable: '--font-mono'
 })
 
+export const metadata = {
+	title: 'Book Summary Platform',
+	description: 'AIを活用した要約管理ツール'
+}
+
 export default function RootLayout({
 	children
 }: Readonly<{
