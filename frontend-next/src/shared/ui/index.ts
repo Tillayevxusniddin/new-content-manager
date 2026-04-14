@@ -9,6 +9,7 @@ export {
 	CardHeader,
 	CardTitle
 } from './card'
+export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './carousel'
 export {
 	Dialog,
 	DialogClose,

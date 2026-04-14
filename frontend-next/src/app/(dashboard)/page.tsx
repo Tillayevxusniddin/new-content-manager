@@ -1,15 +1,11 @@
 'use client'
 import {
-	ArrowLeft,
-	ArrowRight,
-	BookOpen,
 	Brain,
 	Briefcase,
 	Cpu,
 	FileText,
 	FolderOpen,
 	Headphones,
-	Play,
 	Rocket,
 	Sparkles,
 	TrendingUp,
@@ -17,11 +13,12 @@ import {
 	Video
 } from 'lucide-react'
 import Link from 'next/link'
-import { useMemo, useRef } from 'react'
 
-import { BookSummary, books, categories } from '@/shared/lib/mock-data'
+import { CategoryCarousel } from '@/entities/carousel-categories'
+import { Hero } from '@/entities/hero'
+
+import { BookSummary, books } from '@/shared/lib/mock-data'
 import { cn } from '@/shared/lib/utils'
-import { Button } from '@/shared/ui'
 import { Badge } from '@/shared/ui/badge'
 
 export function Progress({ value = 0, className }: { value?: number; className?: string }) {
@@ -119,141 +116,10 @@ export function BookCard({ book, variant = 'default' }: BookCardProps) {
 	)
 }
 
-export function BookGrid({ books }: { books: BookSummary[] }) {
-	return (
-		<div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
-			{books.map((book, index) => (
-				<BookCard key={book.id} book={book} variant={index === 0 ? 'large' : 'default'} />
-			))}
-		</div>
-	)
-}
-
-export function CategoryRow() {
-	const rowRef = useRef<HTMLDivElement>(null)
-
-	const items = useMemo(() => categories, [])
-
-	const scroll = (direction: 'left' | 'right') => {
-		rowRef.current?.scrollBy({ left: direction === 'left' ? -260 : 260, behavior: 'smooth' })
-	}
-
-	return (
-		<div className='relative'>
-			<button
-				onClick={() => scroll('left')}
-				className='border-glass-border bg-card/90 text-foreground absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 rounded-full border p-2 shadow-xl md:block'
-			>
-				<ArrowLeft className='h-4 w-4' />
-			</button>
-			<div
-				ref={rowRef}
-				className='scrollbar-hide flex gap-3 overflow-x-auto py-2 pl-0 md:px-8'
-			>
-				{items.map(category => {
-					const Icon = iconMap[category.icon as keyof typeof iconMap] ?? FolderOpen
-					return (
-						<button
-							key={category.id}
-							className={cn(
-								'border-glass-border bg-card/70 hover:bg-surface-hover flex min-w-44 items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all hover:-translate-y-0.5',
-								category.accent
-							)}
-						>
-							<span className='flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5'>
-								<Icon className='h-4 w-4' />
-							</span>
-							<span className='flex-1'>
-								<span className='text-foreground block text-sm font-semibold'>
-									{category.name}
-								</span>
-								<span className='text-muted-foreground text-xs'>
-									{category.count} 件
-								</span>
-							</span>
-						</button>
-					)
-				})}
-			</div>
-			<button
-				onClick={() => scroll('right')}
-				className='border-glass-border bg-card/90 text-foreground absolute top-1/2 right-0 hidden -translate-y-1/2 rounded-full border p-2 shadow-xl md:block'
-			>
-				<ArrowRight className='h-4 w-4' />
-			</button>
-		</div>
-	)
-}
-
 export default function Page() {
-	const featured = books.find(book => book.featured) ?? books[0]
 	return (
 		<div className='mx-auto max-w-7xl space-y-10 px-4 py-6 md:px-6 md:py-8'>
-			<section className='border-glass-border bg-card/60 relative overflow-hidden rounded-[2rem] border p-6 shadow-2xl shadow-black/20 md:p-10'>
-				<div
-					className={`absolute inset-0 bg-linear-to-br ${featured.coverTone} opacity-80`}
-				/>
-				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.04),transparent_22%)]' />
-				<div className='relative grid gap-8 lg:grid-cols-[240px_1fr] lg:items-center'>
-					<div className='mx-auto w-full max-w-60'>
-						<div className='rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl backdrop-blur'>
-							<div
-								className={`flex aspect-3/4 items-center justify-center rounded-[1.5rem] bg-linear-to-br ${featured.coverTone} p-6 text-center`}
-							>
-								<div>
-									<div className='text-xs tracking-[0.35em] text-white/60 uppercase'>
-										Featured
-									</div>
-									<div
-										className={`mt-4 bg-linear-to-r ${featured.coverAccent} bg-clip-text text-3xl leading-none font-black text-transparent md:text-4xl`}
-									>
-										{featured.title}
-									</div>
-									<div className='mt-4 text-xs text-white/70'>
-										{featured.author}
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className='space-y-4 text-center lg:text-left'>
-						<span className='inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/90 backdrop-blur'>
-							<BookOpen className='h-3.5 w-3.5' />
-							おすすめの要約
-						</span>
-						<div>
-							<h1 className='text-3xl font-black tracking-tight text-white md:text-5xl'>
-								{featured.title}
-							</h1>
-							<p className='mt-2 text-sm text-white/70 md:text-base'>
-								{featured.description}
-							</p>
-						</div>
-						<div className='flex flex-wrap items-center justify-center gap-3 lg:justify-start'>
-							<Link href={`/books/${featured.id}`}>
-								<Button size='lg' className='min-w-44'>
-									<Play className='h-4 w-4' />
-									読み始める
-								</Button>
-							</Link>
-							<Link href='/books'>
-								<Button
-									size='lg'
-									variant='outline'
-									className='border-white/20 bg-white/5 text-white hover:bg-white/10'
-								>
-									もっと見る
-									<ArrowRight className='h-4 w-4' />
-								</Button>
-							</Link>
-						</div>
-						<p className='text-xs text-white/60'>
-							{featured.progress}% 完了 · {featured.duration}
-						</p>
-					</div>
-				</div>
-			</section>
+			<Hero />
 
 			<section className='space-y-4'>
 				<div>
@@ -262,7 +128,7 @@ export default function Page() {
 						好みに合わせて要約を絞り込めます。
 					</p>
 				</div>
-				<CategoryRow />
+				<CategoryCarousel />
 			</section>
 
 			<section className='space-y-4'>
@@ -272,7 +138,15 @@ export default function Page() {
 						関心の高いテーマを中心に選出しています。
 					</p>
 				</div>
-				<BookGrid books={books} />
+				<div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+					{books.map((book, index) => (
+						<BookCard
+							key={book.id}
+							book={book}
+							variant={index === 0 ? 'large' : 'default'}
+						/>
+					))}
+				</div>
 			</section>
 		</div>
 	)

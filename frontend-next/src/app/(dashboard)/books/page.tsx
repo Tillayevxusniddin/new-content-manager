@@ -1,12 +1,12 @@
 'use client'
 import { Search } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { books, categories } from '@/shared/lib/mock-data'
 import { Input } from '@/shared/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select'
 
-import { BookGrid } from '../page'
+import { BookCard } from '../page'
 
 interface Props {
 	query: string
@@ -67,22 +67,6 @@ export default function Page() {
 	const [categoryId, setCategoryId] = useState('all')
 	const [sortOrder, setSortOrder] = useState('desc')
 
-	const filtered = useMemo(() => {
-		return books
-			.filter(book => {
-				const matchesQuery =
-					book.title.toLowerCase().includes(query.toLowerCase()) ||
-					book.description.toLowerCase().includes(query.toLowerCase())
-				const matchesCategory = categoryId === 'all' || book.categoryId === categoryId
-				return matchesQuery && matchesCategory
-			})
-			.sort((a, b) =>
-				sortOrder === 'asc'
-					? a.updatedAt.localeCompare(b.updatedAt)
-					: b.updatedAt.localeCompare(a.updatedAt)
-			)
-	}, [categoryId, query, sortOrder])
-
 	return (
 		<div className='mx-auto max-w-7xl space-y-6 px-4 py-6 md:px-6 md:py-8'>
 			<div>
@@ -99,7 +83,15 @@ export default function Page() {
 				sortOrder={sortOrder}
 				onSortOrderChange={setSortOrder}
 			/>
-			<BookGrid books={filtered} />
+			<div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+				{books.map((book, index) => (
+					<BookCard
+						key={book.id}
+						book={book}
+						variant={index === 0 ? 'large' : 'default'}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }

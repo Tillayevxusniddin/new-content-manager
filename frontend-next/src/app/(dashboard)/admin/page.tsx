@@ -1,7 +1,7 @@
 'use client'
 import { BookOpen, Clock3, FolderOpen, Users } from 'lucide-react'
 
-import { BookTable } from '@/widgets/book-table'
+import { BookTable } from '@/widgets/books-table'
 
 import { DialogCreateBook } from '@/features/dialog-create-book/ui/dialog-create-book'
 
