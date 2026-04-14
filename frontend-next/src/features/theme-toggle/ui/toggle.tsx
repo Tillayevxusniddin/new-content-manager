@@ -8,18 +8,22 @@ import { Button } from '@/shared/ui'
 export function ThemeToggle() {
 	const { theme, setTheme, resolvedTheme } = useTheme()
 
-	const isDark = (resolvedTheme ?? theme) === 'dark'
-
 	return (
 		<Button
 			size='sm'
 			variant='outline'
 			type='button'
-			aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-			onClick={() => setTheme(isDark ? 'light' : 'dark')}
+			onClick={() => {
+				setTheme(resolvedTheme === 'light' ? 'dark' : 'light')
+			}}
+			className='size-10 rounded-full'
 		>
-			{isDark ? <SunMedium className='h-4 w-4' /> : <MoonStar className='h-4 w-4' />}
-			<span className='hidden md:inline'>{isDark ? 'Light' : 'Dark'}</span>
+			{resolvedTheme === 'dark' ? (
+				<SunMedium className='h-4 w-4' />
+			) : (
+				<MoonStar className='h-4 w-4' />
+			)}
+			{/* <span className='hidden md:inline'>{resolvedTheme === 'light' ? 'Dark' : 'Light'}</span> */}
 		</Button>
 	)
 }
