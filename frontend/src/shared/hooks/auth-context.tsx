@@ -31,10 +31,15 @@ export const DEMO_ACCOUNTS = [
 		password: 'admin123',
 		label: '管理者アカウント'
 	},
-	{ role: 'user' as const, email: 'mina.sato@company.com', password: 'user123', label: 'Mina Sato' },
-	{ role: 'user' as const, email: 'yuki.yamamoto@company.com', password: 'user123', label: 'Yuki Yamamoto' },
-	{ role: 'user' as const, email: 'hiroshi.nakamura@company.com', password: 'user123', label: 'Hiroshi Nakamura' },
-	{ role: 'user' as const, email: 'sakura.kobayashi@company.com', password: 'user123', label: 'Sakura Kobayashi' }
+	{
+		role: 'user' as const,
+		email: 'mina.sato@company.com',
+		password: 'user123',
+		label: 'Mina Sato'
+	}
+	// { role: 'user' as const, email: 'yuki.yamamoto@company.com', password: 'user123', label: 'Yuki Yamamoto' },
+	// { role: 'user' as const, email: 'hiroshi.nakamura@company.com', password: 'user123', label: 'Hiroshi Nakamura' },
+	// { role: 'user' as const, email: 'sakura.kobayashi@company.com', password: 'user123', label: 'Sakura Kobayashi' }
 ] as const
 
 const SESSION_KEY = 'ncm.session.v1'
@@ -65,7 +70,11 @@ export function markFirstLoginNoticeAccepted(email: string) {
 }
 
 export function getPostLoginPath(user: SessionUser) {
-	return hasAcceptedFirstLoginNotice(user.email) ? (user.role === 'admin' ? '/admin' : '/') : '/first-login'
+	return hasAcceptedFirstLoginNotice(user.email)
+		? user.role === 'admin'
+			? '/admin'
+			: '/'
+		: '/first-login'
 }
 
 const FRONTEND_USERS: Array<SessionUser & { password: string; aliases?: string[] }> = [
@@ -84,31 +93,31 @@ const FRONTEND_USERS: Array<SessionUser & { password: string; aliases?: string[]
 		password: DEMO_ACCOUNTS[1].password,
 		role: 'user',
 		aliases: ['mina', 'mina@local']
-	},
-	{
-		id: 'u-user-2',
-		name: 'Yuki Yamamoto',
-		email: DEMO_ACCOUNTS[2].email,
-		password: DEMO_ACCOUNTS[2].password,
-		role: 'user',
-		aliases: ['yuki', 'yuki@local']
-	},
-	{
-		id: 'u-user-3',
-		name: 'Hiroshi Nakamura',
-		email: DEMO_ACCOUNTS[3].email,
-		password: DEMO_ACCOUNTS[3].password,
-		role: 'user',
-		aliases: ['hiroshi', 'hiroshi@local']
-	},
-	{
-		id: 'u-user-4',
-		name: 'Sakura Kobayashi',
-		email: DEMO_ACCOUNTS[4].email,
-		password: DEMO_ACCOUNTS[4].password,
-		role: 'user',
-		aliases: ['sakura', 'sakura@local']
 	}
+	// {
+	// 	id: 'u-user-2',
+	// 	name: 'Yuki Yamamoto',
+	// 	email: DEMO_ACCOUNTS[2].email,
+	// 	password: DEMO_ACCOUNTS[2].password,
+	// 	role: 'user',
+	// 	aliases: ['yuki', 'yuki@local']
+	// },
+	// {
+	// 	id: 'u-user-3',
+	// 	name: 'Hiroshi Nakamura',
+	// 	email: DEMO_ACCOUNTS[3].email,
+	// 	password: DEMO_ACCOUNTS[3].password,
+	// 	role: 'user',
+	// 	aliases: ['hiroshi', 'hiroshi@local']
+	// },
+	// {
+	// 	id: 'u-user-4',
+	// 	name: 'Sakura Kobayashi',
+	// 	email: DEMO_ACCOUNTS[4].email,
+	// 	password: DEMO_ACCOUNTS[4].password,
+	// 	role: 'user',
+	// 	aliases: ['sakura', 'sakura@local']
+	// }
 ]
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -151,30 +160,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		setIsLoading(false)
 	}, [])
 
-	const login = useCallback(async (email: string, password: string): Promise<LoginResult> => {
-		const normalized = email.trim().toLowerCase()
+	const login = useCallback(
+		async (email: string, password: string): Promise<LoginResult> => {
+			const normalized = email.trim().toLowerCase()
 
-		const found = FRONTEND_USERS.find(u => {
-			const emails = [u.email.toLowerCase(), ...(u.aliases ?? []).map(a => a.toLowerCase())]
-			return emails.includes(normalized) && u.password === password
-		})
+			const found = FRONTEND_USERS.find(u => {
+				const emails = [
+					u.email.toLowerCase(),
+					...(u.aliases ?? []).map(a => a.toLowerCase())
+				]
+				return emails.includes(normalized) && u.password === password
+			})
 
-		if (!found) return { ok: false, error: 'Invalid credentials' }
+			if (!found) return { ok: false, error: 'Invalid credentials' }
 
-		const sessionUser: SessionUser = {
-			id: found.id,
-			name: found.name,
-			email: found.email,
-			role: found.role
-		}
+			const sessionUser: SessionUser = {
+				id: found.id,
+				name: found.name,
+				email: found.email,
+				role: found.role
+			}
 
-		clearLegacyStorage()
-		setUser(sessionUser)
-		saveSession(sessionUser)
+			clearLegacyStorage()
+			setUser(sessionUser)
+			saveSession(sessionUser)
 
-		router.push(getPostLoginPath(sessionUser))
-		return { ok: true }
-	}, [router])
+			router.push(getPostLoginPath(sessionUser))
+			return { ok: true }
+		},
+		[router]
+	)
 
 	const logout = useCallback(() => {
 		setUser(null)

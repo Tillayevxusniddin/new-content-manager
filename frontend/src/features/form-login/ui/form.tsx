@@ -1,5 +1,5 @@
+import { CheckCircle2, CircleAlert, LogIn } from 'lucide-react'
 import { Controller } from 'react-hook-form'
-import { CheckCircle2, CircleAlert, LogIn, Sparkles } from 'lucide-react'
 
 import {
 	Badge,
@@ -21,10 +21,7 @@ export const Form: React.FC = () => {
 	return (
 		<FormProvider {...form}>
 			<div className='space-y-4'>
-				<Badge className='bg-white/10 text-white/85'>
-					<Sparkles className='h-3.5 w-3.5' />
-					サインイン
-				</Badge>
+			
 
 				{error && (
 					<div className='border-destructive/40 bg-destructive/10 text-destructive flex items-start gap-2 rounded-2xl border px-4 py-3 text-sm'>
@@ -49,7 +46,9 @@ export const Form: React.FC = () => {
 											placeholder='example@domain.com'
 											autoComplete='off'
 										/>
-										{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
 									</Field>
 								)}
 							/>
@@ -66,7 +65,9 @@ export const Form: React.FC = () => {
 											aria-invalid={fieldState.invalid}
 											autoComplete='off'
 										/>
-										{fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
 									</Field>
 								)}
 							/>
@@ -97,15 +98,15 @@ export const Form: React.FC = () => {
 							className='border-glass-border/80 bg-background/35 hover:border-primary/30 hover:bg-background/50 rounded-2xl border p-4 text-left transition'
 						>
 							<div className='flex items-center justify-between gap-2'>
-								<span className='text-foreground font-semibold'>{account.label}</span>
+								<span className='text-foreground font-semibold'>
+									{account.label}
+								</span>
 								<CheckCircle2 className='text-primary h-4 w-4' />
 							</div>
 							<div className='text-muted-foreground mt-2 text-xs'>
 								{account.email}
 							</div>
-							<div className='text-muted-foreground text-xs'>
-								{account.password}
-							</div>
+							<div className='text-muted-foreground text-xs'>{account.password}</div>
 						</button>
 					))}
 				</div>
