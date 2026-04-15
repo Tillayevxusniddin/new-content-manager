@@ -29,7 +29,7 @@ export default function RootLayout({
 			suppressHydrationWarning
 			className={cn('antialiased', fontMono.variable, 'font-sans', inter.variable)}
 		>
-			<body suppressHydrationWarning className='pr-0'>
+			<body suppressHydrationWarning>
 				<AuthProvider>
 					<Providers>{children}</Providers>
 				</AuthProvider>
