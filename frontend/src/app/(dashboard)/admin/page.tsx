@@ -91,7 +91,7 @@ export default function Page() {
 							<div>
 								<CardTitle className='text-white'>管理メモ</CardTitle>
 								<p className='text-muted-foreground text-sm'>
-									この画面はモックデータに基づいて表示しています。
+									運用時に確認したいポイントをまとめています。
 								</p>
 							</div>
 							<div className='text-primary rounded-2xl bg-white/5 p-3'>
@@ -101,10 +101,10 @@ export default function Page() {
 					</CardHeader>
 					<CardContent className='space-y-3'>
 						<div className='rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/72'>
-							・新規作成ダイアログは FSD の feature 層から呼び出します。
+							・新規作成導線から書籍を追加し、公開前に内容を確認してください。
 						</div>
 						<div className='rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-white/72'>
-							・一覧は今後 API へ差し替えやすいように mock data で構成しています。
+							・カテゴリ整合性とメディア有無を確認してから公開すると運用品質が安定します。
 						</div>
 					</CardContent>
 				</Card>

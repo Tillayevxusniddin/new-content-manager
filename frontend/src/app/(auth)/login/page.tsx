@@ -1,12 +1,12 @@
 'use client'
 
-import { ArrowRight, BookOpenText, ShieldCheck } from 'lucide-react'
+import { ArrowRight, BookOpenText } from 'lucide-react'
 import Link from 'next/link'
 
 import { Form } from '@/features/form-login'
 
 import { useAuth } from '@/shared/hooks/use-auth'
-import { books, demoAccounts } from '@/shared/lib/mock-data'
+import { books } from '@/shared/lib/mock-data'
 import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui'
 
 export default function LoginPage() {
@@ -46,29 +46,6 @@ export default function LoginPage() {
 										<h1 className='text-4xl leading-none font-black tracking-tight text-white md:text-6xl'>
 											Book Summary App
 										</h1>
-										<p className='max-w-xl text-sm leading-7 text-white/70 md:text-base'>
-											アカウントでサインインして、要約ライブラリにアクセスしてください。
-										</p>
-							</div>
-
-							<div className='grid gap-3 sm:grid-cols-3'>
-								{[
-									{ label: 'Mock accounts', value: `${demoAccounts.length}種`, icon: ShieldCheck },
-											{ label: 'User roles', value: 'Admin / User', icon: ShieldCheck },
-											{ label: 'Auth mode', value: 'Local mock', icon: ShieldCheck }
-								].map(item => {
-									const Icon = item.icon
-									return (
-										<div
-											key={item.label}
-											className='border-white/10 bg-black/20 rounded-3xl border p-4 backdrop-blur'
-										>
-											<Icon className='text-primary h-5 w-5' />
-											<div className='mt-3 text-sm font-semibold text-white'>{item.value}</div>
-											<div className='text-white/55 text-xs'>{item.label}</div>
-										</div>
-									)
-								})}
 							</div>
 						</div>
 

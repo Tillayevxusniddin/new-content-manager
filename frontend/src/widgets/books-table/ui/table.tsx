@@ -2,11 +2,9 @@ import { format } from 'date-fns'
 import { Edit3, MoreHorizontal, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 
-import { Progress } from '@/app/(dashboard)/page'
-
 import { books } from '@/shared/lib/mock-data'
 import { cn } from '@/shared/lib/utils'
-import { Badge, Button } from '@/shared/ui'
+import { Badge, Button, Progress } from '@/shared/ui'
 
 import { Filter } from './filter'
 

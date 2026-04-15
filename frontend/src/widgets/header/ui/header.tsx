@@ -15,14 +15,13 @@ import { useSidebarModel } from '@/widgets/sidebar/model'
 export const Header = () => {
 	const model = useHeaderModel()
 	const { user, logout } = model
-	const { navItems, roleLabel } = useSidebarModel()
-	const isAdmin = user?.role === 'admin'
+	const { isAdmin, userItems, adminItems } = useSidebarModel()
 	const [mobileOpen, setMobileOpen] = useState(false)
 
 	const closeMobile = () => setMobileOpen(false)
 
 	return (
-		<header className='border-glass-border/80 bg-background/70 fixed top-0 right-0 left-0 z-40 border-b backdrop-blur-2xl'>
+		<header className='fixed top-0 right-0 left-0 z-40 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-xl'>
 			<div className='mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-6'>
 				<div className='flex items-center gap-3'>
 					<Button
@@ -34,23 +33,17 @@ export const Header = () => {
 						<Menu className='h-5 w-5' />
 					</Button>
 
-					<Link href='/' className='text-foreground flex items-center gap-3 font-bold'>
-						<span className='bg-primary/15 text-primary glow-soft flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10'>
+					<Link href='/' className='flex items-center gap-3 font-bold text-zinc-100'>
+						<span className='text-primary flex h-11 w-11 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-900'>
 							<BookOpenText className='h-5 w-5' />
 						</span>
 						<div className='leading-tight'>
 							<div className='text-sm md:text-base'>Book Summary App</div>
-							<div className='text-muted-foreground hidden text-xs font-normal md:block'>
+							<div className='hidden text-xs font-normal text-zinc-400 md:block'>
 								社員向け要約プラットフォーム
 							</div>
 						</div>
 					</Link>
-				</div>
-
-				<div className='hidden items-center gap-2 md:flex'>
-					<span className='border-glass-border/70 bg-card/50 text-muted-foreground rounded-full border px-3 py-1.5 text-xs'>
-						{roleLabel}
-					</span>
 				</div>
 
 				<div className='flex items-center gap-2'>
@@ -63,7 +56,7 @@ export const Header = () => {
 					) : (
 						<Link
 							href='/login'
-							className='bg-primary text-primary-foreground glow-primary hidden h-9 items-center justify-center rounded-xl px-4 text-sm font-medium transition-all hover:opacity-90 sm:inline-flex'
+							className='bg-primary text-primary-foreground hidden h-9 items-center justify-center rounded-xl px-4 text-sm font-medium transition-opacity hover:opacity-90 sm:inline-flex'
 						>
 							サインイン
 						</Link>
@@ -74,19 +67,16 @@ export const Header = () => {
 			<Dialog open={mobileOpen} onOpenChange={setMobileOpen}>
 				<DialogContent
 					showCloseButton={false}
-					className='left-0 top-0 h-dvh w-[min(86vw,22rem)] max-w-none translate-x-0 translate-y-0 rounded-r-[2rem] rounded-l-none border-white/10 bg-[#060913]/95 p-0 text-white backdrop-blur-2xl'
+					className='left-0 top-0 h-dvh w-[min(86vw,22rem)] max-w-none translate-x-0 translate-y-0 rounded-r-[2rem] rounded-l-none border-zinc-800 bg-zinc-950/95 p-0 text-white'
 				>
 					<DialogTitle className='sr-only'>モバイルナビゲーションメニュー</DialogTitle>
 					<div className='flex h-full flex-col'>
-						<div className='border-white/10 flex items-center justify-between border-b px-5 py-4'>
+						<div className='flex items-center justify-between border-b border-zinc-800 px-5 py-4'>
 							<div className='flex items-center gap-3'>
-								<span className='bg-primary/15 text-primary flex h-10 w-10 items-center justify-center rounded-2xl'>
+								<span className='text-primary flex h-10 w-10 items-center justify-center rounded-2xl border border-zinc-700 bg-zinc-900'>
 									<PanelLeft className='h-5 w-5' />
 								</span>
-								<div>
-									<div className='font-semibold'>Navigation</div>
-									<div className='text-white/50 text-xs'>{roleLabel}</div>
-								</div>
+								<div className='font-semibold'>Navigation</div>
 							</div>
 							<Button variant='ghost' size='icon' onClick={closeMobile} className='text-white'>
 								<X className='h-5 w-5' />
@@ -94,30 +84,32 @@ export const Header = () => {
 						</div>
 
 						<div className='space-y-4 px-5 py-5'>
-							<div className='rounded-[1.5rem] border border-white/10 bg-white/5 p-4'>
-								<div className='text-white/60 text-xs uppercase tracking-[0.24em]'>
-									Current mode
-								</div>
-								<div className='mt-2 text-lg font-semibold'>
-									{isAdmin ? '管理者ビュー' : '読書ビュー'}
-								</div>
-								<div className='text-white/60 mt-1 text-sm'>
-									{user ? user.email : 'Guest'}
-								</div>
-							</div>
-
 							<div className='grid gap-2'>
-								{navItems.map(item => (
-									<NavLink
-										key={item.to}
-										href={item.to}
-										className='flex items-center gap-3 rounded-2xl px-4 py-3 text-base'
-										onClick={closeMobile}
-									>
-										<item.icon className='h-4 w-4' />
-										<span>{item.label}</span>
-									</NavLink>
-								))}
+								{isAdmin ? (
+									adminItems.map(item => (
+										<NavLink
+											key={item.to}
+											href={item.to}
+											className='flex items-center gap-3 rounded-2xl px-4 py-3 text-base'
+											onClick={closeMobile}
+										>
+											<item.icon className='h-4 w-4' />
+											<span>{item.label}</span>
+										</NavLink>
+									))
+								) : (
+									userItems.map(item => (
+										<NavLink
+											key={item.to}
+											href={item.to}
+											className='flex items-center gap-3 rounded-2xl px-4 py-3 text-base'
+											onClick={closeMobile}
+										>
+											<item.icon className='h-4 w-4' />
+											<span>{item.label}</span>
+										</NavLink>
+									))
+								)}
 							</div>
 
 							<div className='grid gap-3 pt-2'>
@@ -129,14 +121,14 @@ export const Header = () => {
 									ログイン画面
 								</Link>
 								{user ? (
-									<Button variant='outline' onClick={() => { logout(); closeMobile() }} className='h-11 justify-start rounded-2xl border-white/10 bg-white/5 text-white'>
+									<Button variant='outline' onClick={() => { logout(); closeMobile() }} className='h-11 justify-start rounded-2xl border-zinc-700 bg-zinc-900 text-white'>
 										<LogOut className='h-4 w-4' />
 										ログアウト
 									</Button>
 								) : null}
 							</div>
 
-							<div className='border-white/10 mt-auto border-t px-5 py-4'>
+							<div className='mt-auto border-t border-zinc-800 px-5 py-4'>
 								<div className='flex items-center justify-between'>
 									<div className='text-white/60 text-xs uppercase tracking-[0.24em]'>
 										Theme

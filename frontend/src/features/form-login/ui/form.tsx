@@ -21,15 +21,10 @@ export const Form: React.FC = () => {
 	return (
 		<FormProvider {...form}>
 			<div className='space-y-4'>
-				<div className='flex items-center justify-between gap-3'>
-					<Badge className='bg-white/10 text-white/85'>
-						<Sparkles className='h-3.5 w-3.5' />
-						Mock Data Login
-					</Badge>
-					<span className='text-muted-foreground text-xs'>
-						本番接続前の UI 確認用
-					</span>
-				</div>
+				<Badge className='bg-white/10 text-white/85'>
+					<Sparkles className='h-3.5 w-3.5' />
+					サインイン
+				</Badge>
 
 				{error && (
 					<div className='border-destructive/40 bg-destructive/10 text-destructive flex items-start gap-2 rounded-2xl border px-4 py-3 text-sm'>
