@@ -48,20 +48,22 @@ export default function Page() {
 					{dashboardStats.map(stat => {
 						const Icon = iconMap[stat.icon as keyof typeof iconMap] ?? BookMarked
 						return (
-							<Card key={stat.label} className='border-zinc-800 bg-zinc-900/80 py-4'>
+							<Card key={stat.label} className='border-border bg-card/80 py-4'>
 								<CardHeader className='flex flex-row items-center justify-between pb-2'>
-									<div className='flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-zinc-200'>
+									<div className='border-border bg-surface text-foreground flex h-10 w-10 items-center justify-center rounded-xl border'>
 										<Icon className='h-4 w-4' />
 									</div>
-									<span className='rounded-full border border-zinc-700 bg-zinc-950 px-2.5 py-1 text-xs text-zinc-300'>
+									<span className='border-border bg-surface text-muted-foreground rounded-full border px-2.5 py-1 text-xs'>
 										{stat.change}
 									</span>
 								</CardHeader>
 								<CardContent>
-									<div className='text-2xl font-black text-zinc-100'>
+									<div className='text-foreground text-2xl font-black'>
 										{stat.value}
 									</div>
-									<div className='mt-1 text-sm text-zinc-400'>{stat.label}</div>
+									<div className='text-muted-foreground mt-1 text-sm'>
+										{stat.label}
+									</div>
 								</CardContent>
 							</Card>
 						)
@@ -72,10 +74,10 @@ export default function Page() {
 			<section className='space-y-4'>
 				<div className='flex items-end justify-between gap-3'>
 					<div>
-						<h2 className='text-lg font-bold text-zinc-100'>続きから読む</h2>
-						<p className='text-sm text-zinc-400'>閲覧履歴から再開できます。</p>
+						<h2 className='text-foreground text-lg font-bold'>続きから読む</h2>
+						<p className='text-muted-foreground text-sm'>閲覧履歴から再開できます。</p>
 					</div>
-					<Badge className='border-zinc-800 bg-zinc-900 text-zinc-300'>
+					<Badge className='border-border bg-surface text-foreground'>
 						{continueReading.length} 件
 					</Badge>
 				</div>
@@ -92,31 +94,33 @@ export default function Page() {
 
 			<section className='space-y-4'>
 				<div>
-					<h2 className='text-lg font-bold text-zinc-100'>カテゴリ</h2>
-					<p className='text-sm text-zinc-400'>カテゴリ別で要約を絞り込めます。</p>
+					<h2 className='text-foreground text-lg font-bold'>カテゴリ</h2>
+					<p className='text-muted-foreground text-sm'>
+						カテゴリ別で要約を絞り込めます。
+					</p>
 				</div>
 				<div className='grid gap-3 sm:grid-cols-2 xl:grid-cols-4'>
 					{categories.map(category => (
 						<div
 							key={category.id}
-							className='rounded-2xl border border-zinc-800 bg-zinc-900/80 p-4'
+							className='border-border bg-card/80 rounded-2xl border p-4'
 						>
 							<div className='flex items-center justify-between gap-3'>
 								<div>
-									<div className='text-sm font-semibold text-zinc-100'>
+									<div className='text-foreground text-sm font-semibold'>
 										{category.name}
 									</div>
-									<div className='text-xs text-zinc-400'>
+									<div className='text-muted-foreground text-xs'>
 										{category.count} 件の要約
 									</div>
 								</div>
-								<div className='text-zinc-400'>
+								<div className='text-muted-foreground'>
 									<FolderOpen className='h-5 w-5' />
 								</div>
 							</div>
-							<div className='mt-4 h-1.5 rounded-full bg-zinc-800'>
+							<div className='bg-border mt-4 h-1.5 rounded-full'>
 								<div
-									className='h-full rounded-full bg-zinc-500'
+									className='bg-primary h-full rounded-full'
 									style={{ width: `${Math.min(90, 30 + category.count)}%` }}
 								/>
 							</div>
@@ -128,12 +132,14 @@ export default function Page() {
 			<section className='space-y-4'>
 				<div className='flex items-end justify-between gap-3'>
 					<div>
-						<h2 className='text-lg font-bold text-zinc-100'>おすすめの要約</h2>
-						<p className='text-sm text-zinc-400'>新着・人気の要約を表示しています。</p>
+						<h2 className='text-foreground text-lg font-bold'>おすすめの要約</h2>
+						<p className='text-muted-foreground text-sm'>
+							新着・人気の要約を表示しています。
+						</p>
 					</div>
 					<Link
 						href='/books'
-						className='text-sm font-medium text-zinc-300 hover:text-zinc-100'
+						className='text-muted-foreground hover:text-foreground text-sm font-medium'
 					>
 						一覧へ移動
 					</Link>
