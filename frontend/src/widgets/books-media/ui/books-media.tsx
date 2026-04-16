@@ -1,6 +1,7 @@
 'use client'
 
 import { CheckCircle2, Pause, Play } from 'lucide-react'
+import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useMediaPlayer } from '@/shared/hooks/use-media-player'
@@ -30,7 +31,6 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 		if (progress.audioPositionSec > 0) {
 			media.seek(progress.audioPositionSec)
 		}
-		// Sync initial saved playback position once after persisted progress loads.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [progress.audioPositionSec])
 
@@ -45,13 +45,34 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 	useEffect(() => {
 		const onScroll = () => {
 			setShowStickyHeader(window.scrollY > 260)
-			setShowTextSection(window.scrollY > 420)
-			setShowVideoSection(window.scrollY > 860)
 		}
-
 		onScroll()
 		window.addEventListener('scroll', onScroll)
 		return () => window.removeEventListener('scroll', onScroll)
+	}, [])
+
+	useEffect(() => {
+		const textEl = document.getElementById('text-section')
+		const videoEl = document.getElementById('video-section')
+
+		const observer = new IntersectionObserver(
+			entries => {
+				entries.forEach(entry => {
+					if (entry.target.id === 'text-section' && entry.isIntersecting) {
+						setShowTextSection(true)
+					}
+					if (entry.target.id === 'video-section' && entry.isIntersecting) {
+						setShowVideoSection(true)
+					}
+				})
+			},
+			{ threshold: 0.08 }
+		)
+
+		if (textEl) observer.observe(textEl)
+		if (videoEl) observer.observe(videoEl)
+
+		return () => observer.disconnect()
 	}, [])
 
 	const timelinePercent = useMemo(() => {
@@ -60,30 +81,6 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 
 	return (
 		<div className='text-foreground relative'>
-			{/* <div
-				className={cn(
-					'border-border/80 bg-background/80 pointer-events-none sticky top-0 z-40 mb-10 border-b px-4 pb-3 backdrop-blur-xl transition-all duration-300 md:px-6'
-				)}
-			>
-				<div className='mx-auto flex w-full max-w-6xl items-center justify-between gap-3'>
-					<div className='min-w-0'>
-						<p className='line-clamp-1 text-sm font-semibold'>{book.title}</p>
-						<p className='text-muted-foreground line-clamp-1 text-xs'>{book.author}</p>
-					</div>
-					<Button
-						size='icon-sm'
-						onClick={media.toggle}
-						className='pointer-events-auto rounded-full'
-					>
-						{media.playing ? (
-							<Pause className='h-4 w-4' />
-						) : (
-							<Play className='h-4 w-4' />
-						)}
-					</Button>
-				</div>
-			</div> */}
-
 			<section className='border-border from-primary/25 via-card to-background relative overflow-hidden rounded-[2.25rem] border bg-linear-to-b p-5 shadow-[0_30px_100px_hsl(var(--foreground)/0.18)] md:p-8'>
 				<div className='pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.22),transparent_42%),radial-gradient(circle_at_bottom,hsl(var(--accent)/0.14),transparent_40%)]' />
 				<div className='relative mx-auto flex w-full max-w-3xl flex-col items-center gap-6 text-center'>
@@ -94,17 +91,12 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 								book.coverTone
 							)}
 						>
-							<div className='flex h-full flex-col justify-between p-6 text-left'>
-								<span className='text-[10px] tracking-[0.28em] text-white/70 uppercase'>
-									Now Playing
-								</span>
-								<div>
-									<h1 className='text-3xl leading-[1.05] font-black text-white md:text-4xl'>
-										{book.title}
-									</h1>
-									<p className='mt-3 text-sm text-white/85'>{book.author}</p>
-								</div>
-							</div>
+							<Image
+								alt='book detail'
+								src={book.imageUrl}
+								fill
+								className='rounded-[1.4rem] object-cover'
+							/>
 						</div>
 					</div>
 
@@ -151,6 +143,7 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 			</section>
 
 			<section
+				id='text-section'
 				className={cn(
 					'border-border/80 bg-card/70 mt-8 rounded-[2rem] border p-6 backdrop-blur-xl transition-all duration-700 md:p-8',
 					showTextSection ? 'translate-y-0 opacity-100' : 'translate-y-7 opacity-0'
@@ -219,6 +212,7 @@ export function BooksMedia({ book }: { book: BookSummary }) {
 			</section>
 
 			<section
+				id='video-section'
 				className={cn(
 					'border-border/80 bg-card/70 mt-8 rounded-[2rem] border p-6 backdrop-blur-xl transition-all duration-700 md:p-8',
 					showVideoSection ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
