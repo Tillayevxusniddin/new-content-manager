@@ -6,6 +6,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
+import { DialogUpdateBook } from '@/features/dialog-update-book'
+import { DialogWarning } from '@/features/dialog-warning'
+
 import { books } from '@/shared/lib/mock-data'
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Progress } from '@/shared/ui'
 
@@ -46,18 +49,31 @@ export default function Page() {
 				<Link href='/admin/books'>
 					<Button variant='outline' className='border-border bg-card/70'>
 						<ArrowLeft className='h-4 w-4' />
-						Back to list
+						一覧に戻る
 					</Button>
 				</Link>
 				<div className='flex items-center gap-2'>
-					<Button variant='outline' className='border-border bg-card/70'>
-						<PencilLine className='h-4 w-4' />
-						編集
-					</Button>
-					<Button variant='outline' className='border-border bg-card/70 text-red-400'>
-						<Trash2 className='h-4 w-4' />
-						削除
-					</Button>
+					<DialogUpdateBook
+						trigger={
+							<Button variant='outline' className='border-border bg-card/70'>
+								<PencilLine className='h-4 w-4' />
+								編集
+							</Button>
+						}
+					/>
+					<DialogWarning
+						isLoading={false}
+						onConfirm={() => {}}
+						trigger={
+							<Button
+								variant='outline'
+								className='border-border bg-card/70 text-red-400'
+							>
+								<Trash2 className='h-4 w-4' />
+								削除
+							</Button>
+						}
+					/>
 				</div>
 			</div>
 
