@@ -16,7 +16,7 @@ export default function Page() {
 
 	return (
 		<div className='space-y-8 px-1'>
-			<section className='relative overflow-hidden rounded-[2.5rem] bg-[linear-gradient(135deg,rgba(2,6,23,0.95),rgba(15,23,42,0.88),rgba(59,130,246,0.16))] p-6 md:p-8'>
+			<section className='relative overflow-hidden overflow-x-auto rounded-2xl bg-[linear-gradient(135deg,rgba(2,6,23,0.95),rgba(15,23,42,0.88),rgba(59,130,246,0.16))] p-5 md:p-8'>
 				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.06),transparent_22%)]' />
 				<div className='relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between'>
 					<div className='space-y-3 text-white'>
