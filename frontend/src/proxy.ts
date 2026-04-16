@@ -1,3 +1,6 @@
+import { NextResponse } from 'next/server'
+
 export default function proxy() {
-	return
+	// Explicitly continue to app routes.
+	return NextResponse.next()
 }
