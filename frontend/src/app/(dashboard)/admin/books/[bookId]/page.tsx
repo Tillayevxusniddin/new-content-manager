@@ -64,18 +64,16 @@ export default function Page() {
 			<section className='relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(2,6,23,0.95),rgba(15,23,42,0.9),rgba(56,189,248,0.14))] p-4 sm:p-6 md:p-8'>
 				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_28%)]' />
 				<div className='relative grid gap-5 md:grid-cols-[240px_1fr] md:gap-8'>
-					<div className='border-border/70 bg-card/70 rounded-[1.5rem] border p-3 backdrop-blur-xl'>
-						<div className='relative aspect-3/4 overflow-hidden rounded-[1.15rem]'>
-							<div
-								className={`absolute inset-0 rounded-[1.15rem] bg-linear-to-br ${book.coverTone}`}
-							/>
-							<Image
-								src={book.imageUrl}
-								alt={book.title}
-								fill
-								className='rounded-[1.15rem] object-cover'
-							/>
-						</div>
+					<div className='relative aspect-3/4 overflow-hidden rounded-[1.15rem]'>
+						<div
+							className={`absolute inset-0 rounded-[1.15rem] bg-linear-to-br ${book.coverTone}`}
+						/>
+						<Image
+							src={book.imageUrl}
+							alt={book.title}
+							fill
+							className='rounded-[1.15rem] object-cover'
+						/>
 					</div>
 
 					<div className='space-y-4 text-white'>
@@ -149,7 +147,13 @@ export default function Page() {
 								className='border-border bg-surface flex items-center justify-between rounded-xl border p-3'
 							>
 								<span className='text-sm font-medium'>{item.label}</span>
-								<Badge className={item.enabled ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-white/65'}>
+								<Badge
+									className={
+										item.enabled
+											? 'bg-emerald-500/20 text-emerald-300'
+											: 'bg-white/10 text-white/65'
+									}
+								>
 									{item.enabled ? 'Enabled' : 'Not Added'}
 								</Badge>
 							</div>
@@ -157,8 +161,12 @@ export default function Page() {
 
 						<div className='pt-2'>
 							<div className='mb-2 flex items-center justify-between'>
-								<span className='text-muted-foreground text-xs'>Overall Progress</span>
-								<span className='text-muted-foreground text-xs'>{book.progress}%</span>
+								<span className='text-muted-foreground text-xs'>
+									Overall Progress
+								</span>
+								<span className='text-muted-foreground text-xs'>
+									{book.progress}%
+								</span>
 							</div>
 							<Progress value={book.progress} className='h-2' />
 						</div>
@@ -176,7 +184,10 @@ export default function Page() {
 						.filter(Boolean)
 						.slice(0, 5)
 						.map((line, index) => (
-							<p key={`${book.id}-${index}`} className='text-muted-foreground text-sm leading-7'>
+							<p
+								key={`${book.id}-${index}`}
+								className='text-muted-foreground text-sm leading-7'
+							>
 								{line.replace(/^#{2,3}\s/, '').replace(/\*\*(.*?)\*\*/g, '$1')}
 							</p>
 						))}
