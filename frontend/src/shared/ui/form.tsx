@@ -91,7 +91,7 @@ function FormLabel({
 			data-slot='form-label'
 			data-error={!!error}
 			className={cn(
-				'data-[error=true]:text-destructive pb-3 text-base font-semibold text-black sm:text-lg dark:text-white',
+				'data-[error=true]:text-destructive pb-3 text-base font-semibold text-foreground sm:text-lg',
 				required && 'required-label',
 				className
 			)}

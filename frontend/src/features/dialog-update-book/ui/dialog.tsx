@@ -4,7 +4,6 @@ import { Upload } from 'lucide-react'
 import { categories } from '@/shared/lib/mock-data'
 import {
 	Button,
-	Dialog,
 	DialogClose,
 	DialogContent,
 	DialogHeader,
@@ -12,6 +11,7 @@ import {
 	DialogTrigger,
 	Input,
 	Label,
+	Dialog as Root,
 	ScrollArea,
 	Select,
 	SelectContent,
@@ -21,15 +21,15 @@ import {
 	Textarea
 } from '@/shared/ui'
 
-export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigger }) => {
+export const Dialog: React.FC<{ trigger: React.ReactNode }> = ({ trigger }) => {
 	return (
-		<Dialog>
+		<Root>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
 			<DialogContent className='max-h-[92vh] w-[calc(100vw-1rem)] max-w-[calc(100vw-1rem)] p-4 sm:max-w-2xl sm:p-6'>
 				<DialogHeader>
-					<DialogTitle>新しい書籍要約を追加</DialogTitle>
+					<DialogTitle>編集</DialogTitle>
 				</DialogHeader>
-				<ScrollArea className='h-[60vh] rounded-md pr-1 sm:h-110 sm:px-3'>
+				<ScrollArea className='h-[60vh] rounded-md pr-2 sm:h-110 sm:px-3'>
 					<div className='px-1'>
 						<div className='grid gap-4 md:grid-cols-2'>
 							<div className='space-y-2'>
@@ -93,6 +93,6 @@ export const DialogCreateBook: React.FC<{ trigger: React.ReactNode }> = ({ trigg
 					<Button className='w-full sm:w-auto'>保存</Button>
 				</div>
 			</DialogContent>
-		</Dialog>
+		</Root>
 	)
 }

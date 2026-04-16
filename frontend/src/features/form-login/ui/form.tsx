@@ -1,7 +1,8 @@
+import { CheckCircle2, CircleAlert, LogIn } from 'lucide-react'
 import { Controller } from 'react-hook-form'
 
-import { DEMO_ACCOUNTS } from '@/shared/hooks/auth-context'
 import {
+	Badge,
 	Button,
 	Field,
 	FieldError,
@@ -16,63 +17,77 @@ import { useFormLoginModel } from '../model'
 
 export const Form: React.FC = () => {
 	const model = useFormLoginModel()
-	const { form, onSubmit, submitting } = model
+	const { form, onSubmit, submitting, error, demoAccounts } = model
 	return (
 		<FormProvider {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)}>
-				<FieldSet>
-					<FieldGroup>
-						<Controller
-							name='email'
-							control={form.control}
-							render={({ field, fieldState }) => (
-								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>メール</FieldLabel>
-									<Input
-										{...field}
-										id={field.name}
-										aria-invalid={fieldState.invalid}
-										placeholder='example@domain.com'
-										autoComplete='off'
-									/>
+			<div className='space-y-4'>
+			
 
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</Field>
+				{error && (
+					<div className='border-destructive/40 bg-destructive/10 text-destructive flex items-start gap-2 rounded-2xl border px-4 py-3 text-sm'>
+						<CircleAlert className='mt-0.5 h-4 w-4 shrink-0' />
+						<span>{error}</span>
+					</div>
+				)}
+
+				<form onSubmit={form.handleSubmit(onSubmit)}>
+					<FieldSet>
+						<FieldGroup className='gap-4'>
+							<Controller
+								name='email'
+								control={form.control}
+								render={({ field, fieldState }) => (
+									<Field data-invalid={fieldState.invalid}>
+										<FieldLabel htmlFor={field.name}>メール</FieldLabel>
+										<Input
+											{...field}
+											id={field.name}
+											aria-invalid={fieldState.invalid}
+											placeholder='example@domain.com'
+											autoComplete='off'
+										/>
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
+									</Field>
+								)}
+							/>
+							<Controller
+								name='password'
+								control={form.control}
+								render={({ field, fieldState }) => (
+									<Field data-invalid={fieldState.invalid}>
+										<FieldLabel htmlFor={field.name}>パスワード</FieldLabel>
+										<Input
+											{...field}
+											id={field.name}
+											type='password'
+											aria-invalid={fieldState.invalid}
+											autoComplete='off'
+										/>
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
+									</Field>
+								)}
+							/>
+						</FieldGroup>
+
+						<Button type='submit' className='mt-5 w-full' size='lg'>
+							{submitting ? (
+								'ログイン中...'
+							) : (
+								<>
+									<LogIn className='h-4 w-4' />
+									ログイン
+								</>
 							)}
-						/>
-						<Controller
-							name='password'
-							control={form.control}
-							render={({ field, fieldState }) => (
-								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>パスワード</FieldLabel>
-									<Input
-										{...field}
-										id={field.name}
-										type='password'
-										aria-invalid={fieldState.invalid}
-										autoComplete='off'
-									/>
+						</Button>
+					</FieldSet>
+				</form>
 
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</Field>
-							)}
-						/>
-					</FieldGroup>
-					<Button type='submit'>{submitting ? 'ログイン中...' : 'ログイン'}</Button>
-				</FieldSet>
-			</form>
-
-			<div className='border-glass-border/80 bg-background/45 mt-5 rounded-2xl border p-3'>
-				<p className='text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase'>
-					Mock Accounts
-				</p>
-				<div className='text-foreground/90 mt-2 space-y-2 text-xs'>
-					{DEMO_ACCOUNTS.map(account => (
+				<div className='grid gap-3 sm:grid-cols-2'>
+					{demoAccounts.map(account => (
 						<button
 							key={account.email}
 							type='button'
@@ -80,14 +95,18 @@ export const Form: React.FC = () => {
 								form.setValue('email', account.email)
 								form.setValue('password', account.password)
 							}}
-							className='border-glass-border/80 bg-card/70 hover:border-primary/30 hover:bg-surface-hover w-full rounded-lg border px-2.5 py-2 text-left transition'
+							className='border-glass-border/80 bg-background/35 hover:border-primary/30 hover:bg-background/50 rounded-2xl border p-4 text-left transition'
 						>
-							<span className='text-foreground font-semibold'>{account.label}</span>
-							<span className='text-muted-foreground ml-2'>({account.role})</span>
-							<div className='text-muted-foreground mt-1'>email: {account.email}</div>
-							<div className='text-muted-foreground'>
-								password: {account.password}
+							<div className='flex items-center justify-between gap-2'>
+								<span className='text-foreground font-semibold'>
+									{account.label}
+								</span>
+								<CheckCircle2 className='text-primary h-4 w-4' />
 							</div>
+							<div className='text-muted-foreground mt-2 text-xs'>
+								{account.email}
+							</div>
+							<div className='text-muted-foreground text-xs'>{account.password}</div>
 						</button>
 					))}
 				</div>

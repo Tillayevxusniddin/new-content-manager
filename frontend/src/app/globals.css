@@ -52,42 +52,42 @@
 }
 
 :root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.141 0.005 285.823);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.141 0.005 285.823);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.141 0.005 285.823);
-	--primary: oklch(0.5 0.134 242.749);
-	--primary-foreground: oklch(0.977 0.013 236.62);
-	--secondary: oklch(0.967 0.001 286.375);
-	--secondary-foreground: oklch(0.21 0.006 285.885);
-	--muted: oklch(0.967 0.001 286.375);
-	--muted-foreground: oklch(0.552 0.016 285.938);
-	--accent: oklch(0.5 0.134 242.749);
-	--accent-foreground: oklch(0.977 0.013 236.62);
+	--background: oklch(0.985 0.006 145);
+	--foreground: oklch(0.22 0.022 154);
+	--card: oklch(0.997 0.004 145);
+	--card-foreground: oklch(0.22 0.022 154);
+	--popover: oklch(0.998 0.003 145);
+	--popover-foreground: oklch(0.22 0.022 154);
+	--primary: oklch(0.56 0.12 157);
+	--primary-foreground: oklch(0.985 0.008 145);
+	--secondary: oklch(0.962 0.012 152);
+	--secondary-foreground: oklch(0.27 0.02 154);
+	--muted: oklch(0.958 0.01 150);
+	--muted-foreground: oklch(0.48 0.03 154);
+	--accent: oklch(0.6 0.104 167);
+	--accent-foreground: oklch(0.985 0.008 145);
 	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.92 0.004 286.32);
-	--input: oklch(0.92 0.004 286.32);
-	--ring: oklch(0.705 0.015 286.067);
+	--border: oklch(0.9 0.012 151);
+	--input: oklch(0.91 0.01 150);
+	--ring: oklch(0.66 0.09 158);
 	--chart-1: oklch(0.808 0.114 19.571);
 	--chart-2: oklch(0.637 0.237 25.331);
 	--chart-3: oklch(0.577 0.245 27.325);
 	--chart-4: oklch(0.505 0.213 27.518);
 	--chart-5: oklch(0.444 0.177 26.899);
 	--radius: 0.625rem;
-	--glass: oklch(0.985 0 0 / 0.06);
-	--glass-border: oklch(0.92 0.004 286.32 / 0.35);
-	--surface: oklch(0.985 0 0 / 0.04);
-	--surface-hover: oklch(0.92 0.004 286.32 / 0.06);
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.141 0.005 285.823);
-	--sidebar-primary: oklch(0.588 0.158 241.966);
+	--glass: oklch(0.99 0.004 148 / 0.7);
+	--glass-border: oklch(0.88 0.018 152 / 0.6);
+	--surface: oklch(0.972 0.008 150 / 0.9);
+	--surface-hover: oklch(0.95 0.012 151 / 0.95);
+	--sidebar: oklch(0.992 0.004 148);
+	--sidebar-foreground: oklch(0.24 0.02 154);
+	--sidebar-primary: oklch(0.56 0.12 157);
 	--sidebar-primary-foreground: oklch(0.977 0.013 236.62);
-	--sidebar-accent: oklch(0.967 0.001 286.375);
-	--sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-	--sidebar-border: oklch(0.92 0.004 286.32);
-	--sidebar-ring: oklch(0.705 0.015 286.067);
+	--sidebar-accent: oklch(0.954 0.01 150);
+	--sidebar-accent-foreground: oklch(0.28 0.02 154);
+	--sidebar-border: oklch(0.9 0.012 151);
+	--sidebar-ring: oklch(0.66 0.09 158);
 }
 
 .dark {
@@ -143,13 +143,13 @@
 			sans-serif;
 		min-height: 100vh;
 		background:
-			radial-gradient(circle at top left, hsl(217 91% 60% / 0.13), transparent 35%),
-			radial-gradient(circle at top right, hsl(259 80% 60% / 0.12), transparent 30%),
-			radial-gradient(circle at bottom center, hsl(142 76% 36% / 0.07), transparent 35%),
+			radial-gradient(circle at top left, hsl(160 75% 43% / 0.15), transparent 34%),
+			radial-gradient(circle at top right, hsl(176 68% 42% / 0.12), transparent 30%),
+			radial-gradient(circle at bottom center, hsl(145 62% 36% / 0.09), transparent 36%),
 			hsl(var(--background));
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		overflow-x: hidden;
+		scrollbar-gutter: stable;
 	}
 	html {
 		font-family:
@@ -159,7 +159,6 @@
 			-apple-system,
 			sans-serif;
 		scroll-behavior: smooth;
-		overflow-x: hidden;
 		scrollbar-gutter: stable;
 	}
 	option {
@@ -169,8 +168,20 @@
 	option {
 		color: hsl(var(--foreground));
 	}
-}
 
+	/*
+	 * Radix Dialog uses react-remove-scroll-bar, which injects margin/padding
+	 * compensation on body when scroll is locked. With stable scrollbar gutter,
+	 * this compensation causes a horizontal layout jump.
+	 */
+	body[data-scroll-locked] {
+		margin-right: 0 !important;
+	}
+
+	body[data-scroll-locked].with-scroll-bars-hidden {
+		padding-right: 0 !important;
+	}
+}
 @layer utilities {
 	.glass {
 		border: 1px solid hsl(var(--glass-border) / 0.7);
@@ -201,10 +212,74 @@
 	}
 
 	.text-gradient {
-		background-image: linear-gradient(to right, hsl(var(--primary)), #8b5cf6, #06b6d4);
+		background-image: linear-gradient(to right, hsl(var(--primary)), #16a34a, #0ea5a4);
 		-webkit-background-clip: text;
 		background-clip: text;
 		color: transparent;
+	}
+
+	.admin-hero {
+		background:
+			linear-gradient(
+				135deg,
+				hsl(var(--card) / 0.98),
+				hsl(var(--surface) / 0.96) 42%,
+				hsl(var(--primary) / 0.2)
+			),
+			radial-gradient(circle at top right, hsl(var(--accent) / 0.22), transparent 35%);
+		border: 1px solid hsl(var(--border));
+	}
+
+	.dark .admin-hero {
+		background:
+			linear-gradient(
+				135deg,
+				rgba(2, 6, 23, 0.95),
+				rgba(15, 23, 42, 0.9) 55%,
+				rgba(56, 189, 248, 0.14)
+			),
+			radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 30%);
+		border: 1px solid hsl(var(--border));
+	}
+
+	.admin-hero-overlay {
+		background:
+			radial-gradient(circle at top left, hsl(var(--primary) / 0.18), transparent 28%),
+			radial-gradient(circle at bottom right, hsl(var(--accent) / 0.16), transparent 30%);
+	}
+
+	.dark .admin-hero-overlay {
+		background:
+			radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 30%),
+			radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 28%);
+	}
+
+	.admin-hero-text {
+		color: hsl(var(--foreground));
+	}
+
+	.dark .admin-hero-text {
+		color: rgba(255, 255, 255, 0.95);
+	}
+
+	.admin-hero-subtext {
+		color: hsl(var(--muted-foreground));
+	}
+
+	.dark .admin-hero-subtext {
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.admin-hero-badge {
+		border-color: hsl(var(--border));
+		background: hsl(var(--surface));
+		color: hsl(var(--foreground));
+	}
+
+	.dark .admin-hero-badge {
+		border-color: rgba(255, 255, 255, 0.15);
+		background: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.9);
 	}
 
 	.glow-primary {
@@ -226,3 +301,7 @@
 		display: none;
 	}
 }
+/* 
+div {
+	border: 1px solid red;
+} */

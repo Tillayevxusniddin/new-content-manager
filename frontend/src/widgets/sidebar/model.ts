@@ -12,7 +12,7 @@ type Item = {
 
 const USER_ITEMS: Item[] = [
 	{ to: '/', label: 'ホーム', icon: LayoutGrid, end: true },
-	{ to: '/books', label: '書籍一覧', icon: BookOpenText }
+	{ to: '/books', label: 'ライブラリ', icon: BookOpenText }
 ]
 
 const ADMIN_ITEMS: Item[] = [
@@ -24,7 +24,6 @@ const ADMIN_ITEMS: Item[] = [
 
 export const useSidebarModel = () => {
 	const { user } = useAuth()
-	const roleLabel = user?.role === 'admin' ? '管理者メニュー' : 'ユーザーメニュー'
-	const navItems = user?.role === 'admin' ? ADMIN_ITEMS : USER_ITEMS
-	return { navItems, roleLabel }
+	const isAdmin = user?.role === 'admin'
+	return { isAdmin, userItems: USER_ITEMS, adminItems: ADMIN_ITEMS }
 }

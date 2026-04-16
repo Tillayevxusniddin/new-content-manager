@@ -34,6 +34,7 @@ export interface BookSummary {
 	keyPoints: string[]
 	textContent: string
 	updatedAt: string
+	imageUrl: string
 }
 
 export interface UserProgress {
@@ -130,6 +131,7 @@ export const books: BookSummary[] = [
 		featured: true,
 		keyPoints: ['信頼関係の構築', '明確なコミュニケーション', '共感と傾聴', '権限移譲の実践'],
 		textContent: `## 第1章：リーダーシップの本質\n\nリーダーシップとは、単に指示を出すことではありません。それは、**ビジョンを共有し、チームを鼓舞し、共に成長する**プロセスです。\n\n### 核心的な原則\n\n1. **信頼の構築** — チームメンバーとの信頼関係は、すべての成功の基盤です\n2. **明確なコミュニケーション** — ビジョンと目標を明確に伝える能力\n3. **共感と傾聴** — メンバーの声に耳を傾け、理解する姿勢\n\n> "最も偉大なリーダーは、フォロワーを生み出すのではなく、新しいリーダーを育てる。" — Tom Peters\n\n### 実践のフレームワーク\n\n効果的なリーダーシップを実践するためには、以下の4つのステップが重要です。`,
+		imageUrl: '/dummy/book-1.jpg',
 		updatedAt: '2026-04-01'
 	},
 	{
@@ -148,7 +150,8 @@ export const books: BookSummary[] = [
 		duration: '12分',
 		keyPoints: ['集中時間の確保', '深い作業の習慣化', '環境の最適化'],
 		textContent: `## Deep Work の要点\n\n深い集中を実現するためには、通知を切り、作業ブロックを固定し、毎日のリズムを整えることが重要です。`,
-		updatedAt: '2026-04-01'
+		updatedAt: '2026-04-01',
+		imageUrl: '/dummy/book-2.jpg'
 	},
 	{
 		id: 'book-3',
@@ -166,7 +169,8 @@ export const books: BookSummary[] = [
 		duration: '18分',
 		keyPoints: ['1%改善の積み重ね', '環境デザイン', 'アイデンティティベースの習慣化'],
 		textContent: `## Atomic Habits\n\n習慣は結果ではなく、システムです。毎日の小さな選択が未来を形づくります。`,
-		updatedAt: '2026-04-01'
+		updatedAt: '2026-04-01',
+		imageUrl: '/dummy/book-3.jpg'
 	},
 	{
 		id: 'book-4',
@@ -184,7 +188,8 @@ export const books: BookSummary[] = [
 		duration: '14分',
 		keyPoints: ['独自性の確立', '市場の再定義', 'プロダクト優位性'],
 		textContent: `## Zero to One\n\n競争ではなく、独自の市場をつくることが重要です。`,
-		updatedAt: '2026-04-01'
+		updatedAt: '2026-04-01',
+		imageUrl: '/dummy/book-5.jpg'
 	},
 	{
 		id: 'book-5',
@@ -202,7 +207,8 @@ export const books: BookSummary[] = [
 		duration: '20分',
 		keyPoints: ['直感と熟考', '認知バイアス', '意思決定の品質向上'],
 		textContent: `## Thinking, Fast and Slow\n\n速い思考と遅い思考を使い分けることで、より良い判断を目指します。`,
-		updatedAt: '2026-04-01'
+		updatedAt: '2026-04-01',
+		imageUrl: '/dummy/book-4.jpg'
 	},
 	{
 		id: 'book-6',
@@ -220,7 +226,8 @@ export const books: BookSummary[] = [
 		duration: '16分',
 		keyPoints: ['MVPの作成', '仮説検証', 'ピボットの判断'],
 		textContent: `## The Lean Startup\n\n学習しながら製品を作り、素早く検証することが重要です。`,
-		updatedAt: '2026-04-01'
+		updatedAt: '2026-04-01',
+		imageUrl: '/dummy/book-3.jpg'
 	}
 ]
 
@@ -238,6 +245,27 @@ export const adminUser: User = {
 	role: 'ADMIN'
 }
 
+export const user2: User = {
+	id: 'user-2',
+	name: 'Yuki Yamamoto',
+	email: 'yuki.yamamoto@company.com',
+	role: 'USER'
+}
+
+export const user3: User = {
+	id: 'user-3',
+	name: 'Hiroshi Nakamura',
+	email: 'hiroshi.nakamura@company.com',
+	role: 'USER'
+}
+
+export const user4: User = {
+	id: 'user-4',
+	name: 'Sakura Kobayashi',
+	email: 'sakura.kobayashi@company.com',
+	role: 'USER'
+}
+
 export const demoAccounts: DemoAccount[] = [
 	{
 		label: 'Admin Demo',
@@ -247,11 +275,32 @@ export const demoAccounts: DemoAccount[] = [
 		user: adminUser
 	},
 	{
-		label: 'User Demo',
+		label: 'Mina Sato (Sales)',
 		role: 'USER',
 		email: 'mina.sato@company.com',
 		password: 'User123!',
 		user: currentUser
+	},
+	{
+		label: 'Yuki Yamamoto (Tech)',
+		role: 'USER',
+		email: 'yuki.yamamoto@company.com',
+		password: 'User123!',
+		user: user2
+	},
+	{
+		label: 'Hiroshi Nakamura (Lead)',
+		role: 'USER',
+		email: 'hiroshi.nakamura@company.com',
+		password: 'User123!',
+		user: user3
+	},
+	{
+		label: 'Sakura Kobayashi (HR)',
+		role: 'USER',
+		email: 'sakura.kobayashi@company.com',
+		password: 'User123!',
+		user: user4
 	}
 ]
 
