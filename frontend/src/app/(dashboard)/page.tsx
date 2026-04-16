@@ -81,7 +81,7 @@ export default function Page() {
 						{continueReading.length} 件
 					</Badge>
 				</div>
-				<div className='grid gap-4 md:grid-cols-3'>
+				<div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
 					{continueReading.map((book, index) => (
 						<BookCard
 							key={book.id}
@@ -144,7 +144,7 @@ export default function Page() {
 						一覧へ移動
 					</Link>
 				</div>
-				<div className='grid gap-4 sm:grid-cols-2 xl:grid-cols-3'>
+				<div className='grid grid-cols-2 gap-4 xl:grid-cols-3'>
 					{highlightedBooks.map((book, index) => (
 						<BookCard
 							key={book.id}

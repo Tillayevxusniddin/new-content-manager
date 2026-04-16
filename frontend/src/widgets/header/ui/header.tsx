@@ -84,7 +84,7 @@ export const Header = () => {
 								<span className='text-primary bg-surface border-border flex h-10 w-10 items-center justify-center rounded-2xl border'>
 									<PanelLeft className='h-5 w-5' />
 								</span>
-								<div className='font-semibold'>Navigation</div>
+								<div className='font-semibold'>ナビゲーション</div>
 							</div>
 							<Button
 								variant='ghost'
@@ -149,7 +149,7 @@ export const Header = () => {
 							<div className='border-border mt-auto border-t px-5 py-4'>
 								<div className='flex items-center justify-between'>
 									<div className='text-muted-foreground text-xs tracking-[0.24em] uppercase'>
-										Theme
+										テーマ
 									</div>
 									<ThemeToggle />
 								</div>

@@ -19,7 +19,7 @@ export const Hero: React.FC<HeroProps> = ({ featured, userName }) => {
 				<div className='space-y-5'>
 					<span className='border-border bg-surface text-foreground inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold'>
 						<BookOpenText className='h-3.5 w-3.5' />
-						{userName ? `${userName} さん、ようこそ` : 'Xush kelibsiz'}
+						{userName ? `${userName} さん、ようこそ` : 'ようこそ'}
 					</span>
 					<div>
 						<h1 className='text-foreground text-3xl font-black tracking-tight md:text-5xl'>
