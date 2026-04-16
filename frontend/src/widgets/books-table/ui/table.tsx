@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { Edit3, Trash2 } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { DialogUpdateBook } from '@/features/dialog-update-book'
 import { DialogWarning } from '@/features/dialog-warning'
@@ -48,8 +49,10 @@ export const Table: React.FC = () => {
 												height={80}
 											/>
 											<div>
-												<div className='text-foreground font-semibold'>
-													{book.title}
+												<div className='text-foreground font-semibold hover:text-blue-400 hover:underline'>
+													<Link href={`/admin/books/${book.id}`}>
+														{book.title}
+													</Link>
 												</div>
 												<div className='text-muted-foreground text-xs'>
 													{book.author}
