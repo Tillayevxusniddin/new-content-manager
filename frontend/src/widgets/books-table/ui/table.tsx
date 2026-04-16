@@ -23,8 +23,8 @@ export const Table: React.FC = () => {
 			<div className='border-glass-border bg-card/70 overflow-hidden rounded-xl border backdrop-blur-xl'>
 				{/* ── DESKTOP TABLE (md va undan katta) ── */}
 				<div className='hidden overflow-x-auto md:block'>
-					<table className='w-full divide-white/5 text-left text-sm'>
-						<thead className='text-muted-foreground w-full bg-white/5 text-[11px] tracking-[0.08em] uppercase'>
+					<table className='w-full divide-border text-left text-sm'>
+						<thead className='text-muted-foreground bg-surface w-full text-[11px] tracking-[0.08em] uppercase'>
 							<tr>
 								<th className='px-4 py-4 whitespace-nowrap'>書籍</th>
 								<th className='px-4 py-4 whitespace-nowrap'>カテゴリ</th>
@@ -34,7 +34,7 @@ export const Table: React.FC = () => {
 								<th className='px-4 py-4 text-right whitespace-nowrap'>操作</th>
 							</tr>
 						</thead>
-						<tbody className='divide-y divide-white/5'>
+						<tbody className='divide-y divide-border'>
 							{books.map(book => (
 								<tr
 									key={book.id}
@@ -49,7 +49,7 @@ export const Table: React.FC = () => {
 												height={80}
 											/>
 											<div>
-												<div className='text-foreground font-semibold hover:text-blue-400 hover:underline'>
+												<div className='text-foreground hover:text-primary font-semibold hover:underline'>
 													<Link href={`/admin/books/${book.id}`}>
 														{book.title}
 													</Link>
@@ -121,7 +121,7 @@ export const Table: React.FC = () => {
 					</table>
 				</div>
 				{/* ── MOBILE CARDS (faqat md dan kichik) ── */}
-				<div className='divide-y divide-white/5 md:hidden'>
+				<div className='divide-y divide-border md:hidden'>
 					{books.map(book => (
 						<div
 							key={book.id}

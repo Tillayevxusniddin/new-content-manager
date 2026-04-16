@@ -303,8 +303,8 @@ export default function Page() {
 				</div>
 			</div>
 
-			<section className='relative overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(2,6,23,0.95),rgba(15,23,42,0.9),rgba(56,189,248,0.14))] p-4 sm:p-6 md:p-8'>
-				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_28%)]' />
+			<section className='admin-hero relative overflow-hidden rounded-[2rem] p-4 sm:p-6 md:p-8'>
+				<div className='admin-hero-overlay absolute inset-0' />
 				<div className='relative grid gap-5 md:grid-cols-[240px_1fr] md:gap-8'>
 					<div className='relative aspect-3/4 overflow-hidden rounded-[1.15rem]'>
 						<div
@@ -318,37 +318,37 @@ export default function Page() {
 						/>
 					</div>
 
-					<div className='space-y-4 text-white'>
-						<Badge className='border-white/15 bg-white/10 text-white/90'>
+					<div className='admin-hero-text space-y-4'>
+						<Badge className='admin-hero-badge'>
 							{detail.categoryName}
 						</Badge>
 						<div>
 							<h1 className='text-2xl leading-tight font-black tracking-tight sm:text-3xl md:text-4xl'>
 								{detail.title}
 							</h1>
-							<p className='mt-2 text-sm text-white/75 sm:text-base'>{detail.author}</p>
+							<p className='admin-hero-subtext mt-2 text-sm sm:text-base'>{detail.author}</p>
 						</div>
 
-						<p className='max-w-2xl text-sm leading-7 text-white/80 md:text-base'>
+						<p className='admin-hero-subtext max-w-2xl text-sm leading-7 md:text-base'>
 							{detail.description}
 						</p>
 
 						<div className='grid gap-3 sm:grid-cols-3'>
-							<Card className='border-white/10 bg-white/5'>
+							<Card className='border-border bg-surface/80'>
 								<CardContent className='p-4'>
-									<p className='text-xs text-white/65'>Book ID</p>
+									<p className='text-muted-foreground text-xs'>Book ID</p>
 									<p className='mt-1 text-sm font-semibold'>{detail.id}</p>
 								</CardContent>
 							</Card>
-							<Card className='border-white/10 bg-white/5'>
+							<Card className='border-border bg-surface/80'>
 								<CardContent className='p-4'>
-									<p className='text-xs text-white/65'>Duration</p>
+									<p className='text-muted-foreground text-xs'>Duration</p>
 									<p className='mt-1 text-2xl font-black'>{detail.duration}</p>
 								</CardContent>
 							</Card>
-							<Card className='border-white/10 bg-white/5'>
+							<Card className='border-border bg-surface/80'>
 								<CardContent className='p-4'>
-									<p className='text-xs text-white/65'>Updated</p>
+									<p className='text-muted-foreground text-xs'>Updated</p>
 									<div className='mt-1 flex items-center gap-2 text-sm font-semibold'>
 										<CalendarDays className='h-4 w-4' />
 										{format(new Date(detail.updatedAt), 'yyyy/MM/dd')}

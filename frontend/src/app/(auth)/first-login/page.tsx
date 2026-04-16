@@ -88,7 +88,7 @@ export default function FirstLoginPage() {
 									・UI は 1 画面で完結し、読み切ってから続行する流れにしています。
 								</p>
 							</div>
-							<div className='border-border text-muted-foreground rounded-2xl border bg-white/5 p-4 text-xs'>
+							<div className='border-border bg-surface text-muted-foreground rounded-2xl border p-4 text-xs'>
 								この画面はモック実装です。チェック後は初回確認済みフラグを
 								localStorage に保存して遷移します。
 							</div>
@@ -115,7 +115,7 @@ export default function FirstLoginPage() {
 								</div>
 							</label>
 
-							<div className='border-border rounded-2xl border bg-white/5 bg-[linear-gradient(135deg,hsl(var(--primary)/0.16),hsl(var(--accent)/0.14))] p-4'>
+							<div className='border-border rounded-2xl border bg-[linear-gradient(135deg,hsl(var(--surface)),hsl(var(--primary)/0.16),hsl(var(--accent)/0.14))] p-4'>
 								<div className='text-muted-foreground text-xs tracking-[0.24em] uppercase'>
 									Proceed to the app
 								</div>

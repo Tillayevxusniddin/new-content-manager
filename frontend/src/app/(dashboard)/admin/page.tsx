@@ -16,17 +16,17 @@ export default function Page() {
 
 	return (
 		<div className='space-y-8 px-1'>
-			<section className='relative overflow-hidden overflow-x-auto rounded-2xl bg-[linear-gradient(135deg,rgba(2,6,23,0.95),rgba(15,23,42,0.88),rgba(59,130,246,0.16))] p-5 md:p-8'>
-				<div className='absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.06),transparent_22%)]' />
+			<section className='admin-hero relative overflow-hidden overflow-x-auto rounded-2xl p-5 md:p-8'>
+				<div className='admin-hero-overlay absolute inset-0' />
 				<div className='relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between'>
-					<div className='space-y-3 text-white'>
-						<Badge className='border-white/10 bg-white/10 text-white/85'>
+					<div className='admin-hero-text space-y-3'>
+						<Badge className='admin-hero-badge'>
 							Dashboard
 						</Badge>
 						<h1 className='text-4xl leading-none font-black tracking-tight md:text-5xl'>
 							管理画面も、読みたくなる UI に。
 						</h1>
-						<p className='max-w-2xl text-sm leading-7 text-white/70 md:text-base'>
+						<p className='admin-hero-subtext max-w-2xl text-sm leading-7 md:text-base'>
 							統計、最新コンテンツ、作成導線をまとめて見せる高級感のある管理ビューに変更しました。
 						</p>
 					</div>
@@ -78,7 +78,7 @@ export default function Page() {
 							</p>
 						</div>
 						<Link
-							href='/books'
+							href='/admin/books'
 							className='text-primary flex items-center gap-1 text-sm font-medium'
 						>
 							一覧を見る <ArrowRight className='h-4 w-4' />

@@ -139,7 +139,6 @@ export default function Page() {
 										</CarouselItem>
 									))}
 								</CarouselContent>
-								<CarouselPrevious className='-left-7 border-white/10 bg-black/45 text-white hover:bg-black/60' />
 								<CarouselPrevious className='border-border bg-card/80 text-foreground hover:bg-surface -left-7' />
 								<CarouselNext className='border-border bg-card/80 text-foreground hover:bg-surface -right-7' />
 							</Carousel>

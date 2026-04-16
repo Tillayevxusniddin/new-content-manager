@@ -42,7 +42,7 @@ export const Carousel: React.FC = () => {
 										category.accent
 									)}
 								>
-									<span className='flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5'>
+									<span className='bg-surface flex h-10 w-10 items-center justify-center rounded-2xl'>
 										<Icon className='h-4 w-4' />
 									</span>
 									<span className='flex-1'>

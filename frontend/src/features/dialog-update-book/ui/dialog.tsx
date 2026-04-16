@@ -66,7 +66,7 @@ export const Dialog: React.FC<{ trigger: React.ReactNode }> = ({ trigger }) => {
 							{['カバー画像', '音声ファイル', '動画ファイル'].map(label => (
 								<button
 									key={label}
-									className='border-glass-border text-muted-foreground hover:border-primary/40 hover:text-foreground flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed bg-white/5 px-4 py-5 text-sm transition-colors'
+									className='border-glass-border bg-surface text-muted-foreground hover:border-primary/40 hover:bg-surface-hover hover:text-foreground flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed px-4 py-5 text-sm transition-colors'
 								>
 									<Upload className='h-5 w-5' />
 									{label}
